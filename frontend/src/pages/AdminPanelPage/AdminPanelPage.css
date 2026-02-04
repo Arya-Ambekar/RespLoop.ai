@@ -1,0 +1,5 @@
+.admin-panel-page-wrapper {
+  height: 100vh;
+  background: linear-gradient(128deg, #2e9cfb 0%, #68aadd 46%, #2e9cfb 100%);
+  padding: 15px;
+}
