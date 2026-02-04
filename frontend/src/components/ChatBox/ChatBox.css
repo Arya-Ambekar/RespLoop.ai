@@ -1,0 +1,12 @@
+.ChatBox-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+
+.chat-space {
+  height: 470px;
+  width: 100%;
+  border-radius: 22px;
+  background-color: white;
+}
