@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import ChatBotPage from "./pages/ChatBotPage";
+import ChatBotPage from "./pages/ChatBotPage/ChatBotPage";
 
 function App() {
   return (
