@@ -1,0 +1,82 @@
+.filter-dropdown-wrapper {
+  width: 200px;
+  position: relative;
+}
+
+.filter-header {
+  background-color: #ffffff;
+  border-radius: 22px;
+  padding: 7px 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 15px#b7b7b738;
+}
+
+.filter-dropdown-title {
+  width: 100%;
+  text-align: center;
+  color: #676666;
+  font-size: 14px;
+}
+
+.chevron-icon {
+  width: 15px;
+  height: 15px;
+  color: #aeaeb2;
+}
+
+.filter-dropdown-options-container {
+  margin-top: 5px;
+  background-color: white;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 7px;
+  position: absolute;
+}
+
+.filter-header:hover {
+  cursor: pointer;
+}
+
+.selected-dropdown-option {
+  background-color: #dddddd;
+  border-radius: 22px;
+  padding: 6px 15px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.dropdown-option {
+  border-radius: 22px;
+  padding: 6px 15px;
+  font-size: 14px;
+  color: #717171;
+}
+
+/* PAGINATION */
+.pagination {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pagination button {
+  background-color: white;
+  padding: 5px 18px;
+  color: #676666;
+  font-size: 14px;
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0px 4px 15px#b7b7b738;
+}
+
+.pagination p {
+  font-size: 13px;
+}

@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import AdminPanelHeader from "../../components/AdminPanelHeader/AdminPanelHeader";
 import "./AdminPanelPage.css";
 import { MENU_OPTIONS } from "../../constants/menuOptions";
-import { useState } from "react";
+import ConversationsView from "../../components/ConversationsView/ConversationsView.tsx";
+import TicketsView from "../../components/TicketsView/TicketsView.tsx";
 
 const AdminPanelPage = () => {
   const [selectedMenuOption, setSelectedMenuOption] = useState("conversations");
@@ -15,7 +18,7 @@ const AdminPanelPage = () => {
         <div className="menu-wrapper">
           {MENU_OPTIONS.map(({ id, label, Icon }) => {
             const selected = selectedMenuOption === id;
-
+            console.log(selectedMenuOption);
             return (
               <div
                 key={id}
@@ -48,7 +51,10 @@ const AdminPanelPage = () => {
             );
           })}
         </div>
-        <div className="admin-panel-main-body-wrapper"></div>
+        <div className="admin-panel-main-body-wrapper">
+          {selectedMenuOption === "conversations" && <ConversationsView />}
+          {selectedMenuOption === "tickets" && <TicketsView />}
+        </div>
       </div>
     </div>
   );
