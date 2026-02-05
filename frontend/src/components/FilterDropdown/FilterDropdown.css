@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 4px 15px#b7b7b738;
+  box-shadow: 0px 4px 15px #b7b7b738;
 }
 
 .filter-dropdown-title {
@@ -35,6 +35,7 @@
   overflow: hidden;
   padding: 7px;
   position: absolute;
+  box-shadow: 0px 4px 15px #b7b7b738;
 }
 
 .filter-header:hover {
@@ -49,11 +50,19 @@
   font-size: 14px;
 }
 
+.selected-dropdown-option:hover {
+  cursor: pointer;
+}
+
 .dropdown-option {
   border-radius: 22px;
   padding: 6px 15px;
   font-size: 14px;
   color: #717171;
+}
+
+.dropdown-option:hover {
+  cursor: pointer;
 }
 
 /* PAGINATION */

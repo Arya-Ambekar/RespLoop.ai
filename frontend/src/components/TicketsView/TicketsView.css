@@ -1,0 +1,94 @@
+.tickets-view-wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* TABLE */
+
+.tickets-content-table-wrapper {
+  border: 1px solid #c9c9c9;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.tickets-content-table-wrapper table {
+  width: 100%;
+}
+
+.tickets-view-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.tickets-view-table tr {
+  padding: 0px 10px;
+}
+
+.table-header {
+  background-color: #dddddd;
+}
+
+.tickets-view-table thead th,
+.tickets-view-table thead td {
+  padding: 11px 38px;
+  border-bottom: 1px solid #cdcdcd;
+  font-size: 15px;
+}
+
+.tickets-view-table tbody th,
+.tickets-view-table tbody td {
+  padding: 9px 38px;
+  font-size: 13px;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.tickets-view-table th,
+.tickets-view-table td {
+  text-align: left;
+}
+
+.tickets-view-table th:nth-child(1),
+.tickets-view-table td:nth-child(1) {
+  width: 200px;
+  text-align: left;
+}
+
+.tickets-view-table th:nth-child(2),
+.tickets-view-table td:nth-child(2) {
+  width: 1500px;
+  text-align: left;
+}
+
+.tickets-view-table th:nth-child(3),
+.tickets-view-table td:nth-child(3) {
+  width: 120px;
+  text-align: left;
+}
+
+.tickets-view-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* RESOLUTION STATUS */
+.tickets-status {
+  background-color: white;
+  width: fit-content;
+  border: 1px solid #cdcdcd;
+  padding: 0px 10px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.open {
+  background-color: #e3ffdf;
+  border-color: #1cc546;
+  color: #1cc546;
+}
+
+.closed {
+  background-color: #ffd6d6;
+  border-color: #ce0f0f;
+  color: #ce0f0f;
+}
