@@ -3,11 +3,14 @@ import "./TicketsView.css";
 import { TICKET_STATUS_FILTER_OPTIONS } from "../../constants/ticketStatusOptions";
 import FilterDropdown from "../FilterDropdown/FilterDropdown.tsx";
 import { TICKETS_DUMMY_DATA } from "../../constants/ticketsViewDummyData.ts";
+import { useNavigate } from "react-router-dom";
 
 const TicketsView = () => {
   const [selectedTicketStatus, setSelectedTicketStatus] = useState(
     TICKET_STATUS_FILTER_OPTIONS[0],
   );
+
+  const navigate = useNavigate();
 
   return (
     <div className="tickets-view-wrapper">
@@ -32,7 +35,10 @@ const TicketsView = () => {
             {TICKETS_DUMMY_DATA.map((ticket) => [
               <tr
                 key={ticket.id}
-                onClick={() => console.log("table row clicked", ticket.id)}
+                onClick={() => {
+                  console.log("table row clicked", ticket.id);
+                  navigate(`/admin/tickets/${ticket.conversationId}`);
+                }}
               >
                 <td>{ticket.serial_id}</td>
                 <td>{ticket.reason}</td>

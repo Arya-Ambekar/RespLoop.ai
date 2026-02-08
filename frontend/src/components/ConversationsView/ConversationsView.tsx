@@ -3,11 +3,15 @@ import FilterDropdown from "../FilterDropdown/FilterDropdown.tsx";
 import { RESOLUTION_STATUS_FILTER_OPTIONS } from "../../constants/resolutionStatusOptions.ts";
 import "./ConversationsView.css";
 import { DUMMY_CONVERSATIONS } from "../../constants/conversationsViewDummyData.ts";
+import { useNavigate } from "react-router-dom";
 
 const ConversationsView = () => {
   const [selectedResolutionStatus, setSelectedResolutionStatus] = useState(
     RESOLUTION_STATUS_FILTER_OPTIONS[0],
   );
+
+  const navigate = useNavigate();
+
   return (
     <div className="conversations-view-wrapper">
       <FilterDropdown
@@ -32,7 +36,10 @@ const ConversationsView = () => {
             {DUMMY_CONVERSATIONS.map((convo) => (
               <tr
                 key={convo.id}
-                onClick={() => console.log("table row clicked", convo.id)}
+                onClick={() => {
+                  console.log("table row clicked", convo.id);
+                  navigate(`/admin/conversations/${convo.id}`);
+                }}
               >
                 <td>{convo.serial_id}</td>
                 <td>{convo.email_id}</td>
