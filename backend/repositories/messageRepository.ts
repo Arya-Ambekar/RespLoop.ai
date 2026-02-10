@@ -1,26 +1,29 @@
-import { Message } from "../models";
+import { Op } from "sequelize";
+import { Message } from "../models/message.model.ts";
 
 export const getMessagesRepository = async (data: any) => {
   try {
-    const page = Number(data.query?.page) || 1;
-    const limit = Number(data.query?.limit) || 10;
-    const offset = (page - 1) * limit;
+    const conversationId = data.query?.conversationId;
 
     const messages = await Message.findAndCountAll({
-      attributes: ["id", "text", "sender", "sent_at", "conversationId"],
-      limit,
-      offset,
+      where: {
+        ...(conversationId && {
+          conversationId: { [Op.eq]: conversationId },
+        }),
+      },
+      attributes: [
+        "id",
+        "text",
+        "sender",
+        "sent_at",
+        "conversationId",
+        "createdAt",
+      ],
+      order: [["createdAt", "ASC"]],
     });
-
-    const totalCount = Array.isArray(messages.count)
-      ? messages.count.length
-      : messages.count;
 
     return {
       rows: messages.rows,
-      count: totalCount,
-      page,
-      limit,
     };
   } catch (error) {
     throw error;

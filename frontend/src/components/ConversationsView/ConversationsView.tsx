@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterDropdown from "../FilterDropdown/FilterDropdown.tsx";
 import { RESOLUTION_STATUS_FILTER_OPTIONS } from "../../constants/resolutionStatusOptions.ts";
 import "./ConversationsView.css";
-import { DUMMY_CONVERSATIONS } from "../../constants/conversationsViewDummyData.ts";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
+import {
+  conversationSelector,
+  fetchConversations,
+  filteredConversations,
+  setStatusesFilter,
+} from "../../slices/conversation/conversationSlice.ts";
+import { MessageSquareOff } from "lucide-react";
 
 const ConversationsView = () => {
   const [selectedResolutionStatus, setSelectedResolutionStatus] = useState(
     RESOLUTION_STATUS_FILTER_OPTIONS[0],
   );
+  const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  let { status, pagination } = useAppSelector(conversationSelector);
+  const conversations = useAppSelector(filteredConversations);
+
+  console.log(conversations);
+  useEffect(() => {
+    dispatch(fetchConversations({ page }));
+  }, [dispatch, page]);
 
   return (
     <div className="conversations-view-wrapper">
@@ -20,50 +36,81 @@ const ConversationsView = () => {
         onSelect={(value: string) => {
           console.log("filter clicked");
           setSelectedResolutionStatus(value);
+          dispatch(setStatusesFilter(value));
         }}
       />
       <div className="conversations-content-table-wrapper">
-        <table className="conversations-view-table">
-          <thead className="table-header">
-            <tr>
-              <th>Conversation Id</th>
-              <th>User email</th>
-              <th>Status</th>
-              <th>Last messaged at</th>
-            </tr>
-          </thead>
-          <tbody className="table-body">
-            {DUMMY_CONVERSATIONS.map((convo) => (
-              <tr
-                key={convo.id}
-                onClick={() => {
-                  console.log("table row clicked", convo.id);
-                  navigate(`/admin/conversations/${convo.id}`);
-                }}
-              >
-                <td>{convo.serial_id}</td>
-                <td>{convo.email_id}</td>
-                <td>
-                  <div
-                    className={`resolution-status 
-                      ${convo.status === "Resolved" ? "resolved" : null} 
-                      ${convo.status === "Partially resolved" ? "partially-resolved" : null} 
-                      ${convo.status === "Unresolved" ? "unresolved" : null}`}
+        {status === "loading" && (
+          <div className="loading-conversations">Loading...</div>
+        )}
+
+        {status === "succeeded" &&
+          conversations &&
+          conversations?.length === 0 && (
+            <div className="empty-conversations-table">
+              <MessageSquareOff className="empty-conversations-icon" />
+              <p>No Conversations Yet</p>
+            </div>
+          )}
+
+        {status === "succeeded" &&
+          conversations &&
+          conversations?.length > 0 && (
+            <table className="conversations-view-table">
+              <thead className="table-header">
+                <tr>
+                  <th>Conversation Id</th>
+                  <th>User email</th>
+                  <th>Status</th>
+                  <th>Last messaged at</th>
+                </tr>
+              </thead>
+              <tbody className="table-body">
+                {conversations?.map((convo) => (
+                  <tr
+                    key={convo.id}
+                    onClick={() => {
+                      console.log("table row clicked", convo.id);
+                      navigate(`/admin/conversations/${convo.id}`);
+                    }}
                   >
-                    {convo.status}
-                  </div>
-                </td>
-                <td>{convo.last_messaged_at}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    <td>{convo.serial_id}</td>
+                    <td>{convo?.User.email_id}</td>
+                    <td>
+                      <div
+                        className={`resolution-status 
+                      ${convo.resolution_status === "resolved" ? "resolved" : null} 
+                      ${convo.resolution_status === "partially resolved" ? "partially-resolved" : null} 
+                      ${convo.resolution_status === "unresolved" ? "unresolved" : null}`}
+                      >
+                        {convo.resolution_status
+                          ? convo.resolution_status
+                          : "-"}
+                      </div>
+                    </td>
+                    <td>{convo.formatted_last_messaged_at}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
       </div>
-      <div className="pagination">
-        <button onClick={() => console.log("prev button clicked")}>Prev</button>
-        <p>Page 1 of 5</p>
-        <button onClick={() => console.log("next button clicked")}>Next</button>
-      </div>
+      {status === "succeeded" && pagination.totalPages > 1 && (
+        <div className="pagination">
+          <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+            Prev
+          </button>
+          <p>
+            Page {pagination.page} of {pagination.totalPages}
+          </p>
+          <button
+            disabled={page === pagination.totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

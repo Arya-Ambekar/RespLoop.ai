@@ -8,6 +8,9 @@ import { sequelize } from "./models/index.ts";
 import OpenAI from "openai";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
+import messageRoutes from "./routes/messageRoutes.ts";
+import userRoutes from "./routes/userRoutes.ts";
+import conversationRoutes from "./routes/conversationRoutes.ts";
 
 dotenv.config();
 
@@ -23,6 +26,11 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(morgan("dev"));
+
+// Routes
+app.use("/api/v1", messageRoutes);
+app.use("/api/v1", userRoutes);
+app.use("/api/v1", conversationRoutes);
 
 // start server and connect database
 (async () => {

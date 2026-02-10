@@ -1,4 +1,5 @@
 import { Conversation } from "../models/conversation.model.ts";
+import { User } from "../models/user.model.ts";
 
 export const getConversationsRepository = async (data: any) => {
   try {
@@ -15,6 +16,13 @@ export const getConversationsRepository = async (data: any) => {
         "userId",
         "createdAt",
       ],
+      include: [
+        {
+          model: User,
+          attributes: ["email_id"],
+        },
+      ],
+      order: [["serial_id", "ASC"]],
       limit,
       offset,
     });

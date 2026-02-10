@@ -5,13 +5,25 @@ import {
   updateConversationRepository,
   deleteConversationRepository,
 } from "../repositories/conversationRepository.ts";
+import { formatDateTime } from "../utilities/reusableFunctions/DateFormatter.ts";
 
 export const getConversationsService = async (data: any) => {
   try {
     let conversations = await getConversationsRepository(data);
 
+    const formattedRows = conversations.rows.map((conversation) => {
+      const conversationObj = conversation.toJSON();
+
+      return {
+        ...conversationObj,
+        formatted_last_messaged_at: conversation.last_messaged_at
+          ? formatDateTime(conversation.last_messaged_at)
+          : null,
+      };
+    });
+
     return {
-      data: conversations.rows,
+      data: formattedRows,
       pagination: {
         total: conversations.count,
         page: conversations.page,

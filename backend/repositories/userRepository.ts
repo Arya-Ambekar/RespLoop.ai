@@ -1,4 +1,4 @@
-import { User } from "../models";
+import { User } from "../models/user.model.ts";
 
 export const getUsersRepository = async (data: any) => {
   try {

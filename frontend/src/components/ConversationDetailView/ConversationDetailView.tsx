@@ -1,12 +1,24 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ConversationDetailView.css";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  fetchMessages,
+  messageSelector,
+} from "../../slices/message/messageSlice";
+import { useEffect } from "react";
 
 const ConversationDetailView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log(id);
+  const dispatch = useAppDispatch();
+  const { messages } = useAppSelector(messageSelector);
+
+  useEffect(() => {
+    if (!id) return;
+    dispatch(fetchMessages(id));
+  }, [dispatch, id]);
 
   return (
     <div className="conversation-detail-view">
@@ -23,33 +35,17 @@ const ConversationDetailView = () => {
           </div>
         </div>
         <div className="conversation-window">
-          <div className="details-view-ai-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-user-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-ai-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-user-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-ai-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-user-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-ai-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-user-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
-          <div className="details-view-ai-message-bubble">
-            <p>Hi there, please login for starting conversation.</p>
-          </div>
+          {messages.map((message) => {
+            return (
+              <div
+                key={message.id}
+                className={`details-view-message-bubble
+                ${message.sender === "ai" ? "details-view-ai-message-bubble" : "details-view-user-message-bubble"}`}
+              >
+                <p>{message.text}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

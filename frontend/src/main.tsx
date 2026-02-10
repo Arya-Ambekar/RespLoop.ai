@@ -13,6 +13,8 @@ import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage";
 import ConversationsView from "./components/ConversationsView/ConversationsView.tsx";
 import TicketsView from "./components/TicketsView/TicketsView.tsx";
 import ConversationDetailView from "./components/ConversationDetailView/ConversationDetailView.tsx";
+import { Provider } from "react-redux";
+import { store } from "./store/store.ts";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +31,10 @@ const router = createBrowserRouter(
 );
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  <Provider store={store}>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+    ,
+  </Provider>,
 );
