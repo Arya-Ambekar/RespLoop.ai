@@ -11,6 +11,7 @@ import { Server } from "socket.io";
 import messageRoutes from "./routes/messageRoutes.ts";
 import userRoutes from "./routes/userRoutes.ts";
 import conversationRoutes from "./routes/conversationRoutes.ts";
+import ticketRoutes from "./routes/ticketRoutes.ts";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(morgan("dev"));
 app.use("/api/v1", messageRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", conversationRoutes);
+app.use("/api/v1", ticketRoutes);
 
 // start server and connect database
 (async () => {

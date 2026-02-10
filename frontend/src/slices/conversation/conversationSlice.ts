@@ -10,17 +10,9 @@ import type { RootState } from "../../store/store";
 
 export const fetchConversations = createAsyncThunk(
   "conversations/fetchConversations",
-  async ({
-    search,
-    page = 1,
-    limit = 10,
-  }: {
-    search?: string;
-    page?: number;
-    limit?: number;
-  }) => {
+  async ({ page = 1, limit = 10 }: { page?: number; limit?: number }) => {
     const response = await axios.get(`${BASE_URL}/api/v1/conversations`, {
-      params: { search, page, limit },
+      params: { page, limit },
     });
     return response.data.data;
   },
@@ -37,7 +29,7 @@ const initialState: ConversationState = {
     totalPages: 0,
   },
   filters: {
-    statuses: undefined,
+    resolution_statuses: undefined,
   },
 };
 
@@ -45,8 +37,8 @@ export const conversationSlice = createSlice({
   name: "conversations",
   initialState,
   reducers: {
-    setStatusesFilter: (state, action) => {
-      state.filters.statuses =
+    setResolutionStatusesFilter: (state, action) => {
+      state.filters.resolution_statuses =
         action.payload === "All Statuses" ? undefined : action.payload;
     },
   },
@@ -58,7 +50,6 @@ export const conversationSlice = createSlice({
       .addCase(fetchConversations.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.conversations = action.payload?.data;
-        console.log(action.payload);
         state.pagination = action.payload?.pagination;
       });
   },
@@ -66,7 +57,7 @@ export const conversationSlice = createSlice({
 
 export const conversationSelector = (state: RootState) => state.conversations;
 export default conversationSlice.reducer;
-export const { setStatusesFilter } = conversationSlice.actions;
+export const { setResolutionStatusesFilter } = conversationSlice.actions;
 
 export const filteredConversations = createSelector(
   [
@@ -76,17 +67,16 @@ export const filteredConversations = createSelector(
   (conversations, filter): Conversation[] | null => {
     if (!conversations) return null;
 
-    if (!filter.statuses) return conversations;
+    if (!filter.resolution_statuses) return conversations;
 
-    const { statuses } = filter;
-    console.log("statuses in createSelector:", statuses);
+    const { resolution_statuses } = filter;
 
     return [
       ...conversations.filter((conversation) => {
-        const statusMatch =
-          !statuses ||
-          conversation.resolution_status === statuses.toLowerCase();
-        return statusMatch;
+        const resolutionStatusMatch =
+          !resolution_statuses ||
+          conversation.resolution_status === resolution_statuses.toLowerCase();
+        return resolutionStatusMatch;
       }),
     ];
   },

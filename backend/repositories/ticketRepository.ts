@@ -1,4 +1,5 @@
-import { Ticket } from "../models";
+import { Conversation } from "../models/conversation.model.ts";
+import { Ticket } from "../models/ticket.model.ts";
 
 export const getTicketsRepository = async (data: any) => {
   try {
@@ -8,6 +9,12 @@ export const getTicketsRepository = async (data: any) => {
 
     const messages = await Ticket.findAndCountAll({
       attributes: ["id", "reason", "status", "conversationId"],
+      include: [
+        {
+          model: Conversation,
+          attributes: ["serial_id"],
+        },
+      ],
       limit,
       offset,
     });

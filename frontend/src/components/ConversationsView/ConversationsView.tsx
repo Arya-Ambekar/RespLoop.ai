@@ -8,7 +8,7 @@ import {
   conversationSelector,
   fetchConversations,
   filteredConversations,
-  setStatusesFilter,
+  setResolutionStatusesFilter,
 } from "../../slices/conversation/conversationSlice.ts";
 import { MessageSquareOff } from "lucide-react";
 
@@ -20,10 +20,9 @@ const ConversationsView = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  let { status, pagination } = useAppSelector(conversationSelector);
+  const { status, pagination } = useAppSelector(conversationSelector);
   const conversations = useAppSelector(filteredConversations);
 
-  console.log(conversations);
   useEffect(() => {
     dispatch(fetchConversations({ page }));
   }, [dispatch, page]);
@@ -36,7 +35,7 @@ const ConversationsView = () => {
         onSelect={(value: string) => {
           console.log("filter clicked");
           setSelectedResolutionStatus(value);
-          dispatch(setStatusesFilter(value));
+          dispatch(setResolutionStatusesFilter(value));
         }}
       />
       <div className="conversations-content-table-wrapper">

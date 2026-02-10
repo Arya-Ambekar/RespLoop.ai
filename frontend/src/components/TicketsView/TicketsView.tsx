@@ -1,16 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./TicketsView.css";
 import { TICKET_STATUS_FILTER_OPTIONS } from "../../constants/ticketStatusOptions";
 import FilterDropdown from "../FilterDropdown/FilterDropdown.tsx";
-import { TICKETS_DUMMY_DATA } from "../../constants/ticketsViewDummyData.ts";
+// import { TICKETS_DUMMY_DATA } from "../../constants/ticketsViewDummyData.ts";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
+import {
+  fetchTickets,
+  filteredTickets,
+  setStatusesFilter,
+  ticketSelector,
+} from "../../slices/ticket/ticketSlice.ts";
+import { MessageSquareOff } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const TicketsView = () => {
   const [selectedTicketStatus, setSelectedTicketStatus] = useState(
     TICKET_STATUS_FILTER_OPTIONS[0],
   );
+  const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTickets({ page }));
+  }, [dispatch, page]);
+
+  const { status, pagination } = useAppSelector(ticketSelector);
+  const tickets = useSelector(filteredTickets);
 
   return (
     <div className="tickets-view-wrapper">
@@ -20,47 +38,79 @@ const TicketsView = () => {
         onSelect={(value: string) => {
           console.log("filter clicked");
           setSelectedTicketStatus(value);
+          dispatch(setStatusesFilter(value));
         }}
       />
       <div className="tickets-content-table-wrapper">
-        <table className="tickets-view-table">
-          <thead className="table-header">
-            <tr>
-              <th>Conversation Id</th>
-              <th>Reason</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody className="table-body">
-            {TICKETS_DUMMY_DATA.map((ticket) => [
-              <tr
-                key={ticket.id}
-                onClick={() => {
-                  console.log("table row clicked", ticket.id);
-                  navigate(`/admin/tickets/${ticket.conversationId}`);
-                }}
-              >
-                <td>{ticket.serial_id}</td>
-                <td>{ticket.reason}</td>
-                <td>
-                  <div
-                    className={`tickets-status 
-                      ${ticket.status === "Open" ? "open" : null} 
-                      ${ticket.status === "Closed" ? "closed" : null}`}
-                  >
-                    {ticket.status}
-                  </div>
-                </td>
-              </tr>,
-            ])}
-          </tbody>
-        </table>
+        {status === "loading" && (
+          <div className="loading-tickets">Loading...</div>
+        )}
+
+        {status === "succeeded" && tickets && tickets?.length === 0 && (
+          <div className="empty-tickets-table">
+            <MessageSquareOff className="empty-tickets-icon" />
+            <p>No Conversations Yet</p>
+          </div>
+        )}
+
+        {status === "succeeded" && tickets && tickets?.length > 0 && (
+          <table className="tickets-view-table">
+            <thead className="table-header">
+              <tr>
+                <th>Conversation Id</th>
+                <th>Reason</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody className="table-body">
+              {tickets.map((ticket) => [
+                <tr
+                  key={ticket.id}
+                  onClick={() => {
+                    console.log("table row clicked", ticket.id);
+                    navigate(`/admin/tickets/${ticket.conversationId}`);
+                  }}
+                >
+                  <td>{ticket.Conversation.serial_id}</td>
+                  <td>{ticket.reason}</td>
+                  <td>
+                    <div
+                      className={`tickets-status 
+                      ${ticket.status === "open" ? "open" : null} 
+                      ${ticket.status === "closed" ? "closed" : null}`}
+                    >
+                      {ticket.status}
+                    </div>
+                  </td>
+                </tr>,
+              ])}
+            </tbody>
+          </table>
+        )}
       </div>
-      <div className="pagination">
-        <button onClick={() => console.log("prev button clicked")}>Prev</button>
-        <p>Page 1 of 5</p>
-        <button onClick={() => console.log("next button clicked")}>Next</button>
-      </div>
+      {status === "succeeded" && pagination.totalPages > 1 && (
+        <div className="pagination">
+          <button
+            disabled={page === 1}
+            onClick={() => {
+              setPage((p) => p - 1);
+            }}
+          >
+            Prev
+          </button>
+          <p>
+            Page {pagination.page} of {pagination.totalPages}
+          </p>
+          <button
+            disabled={page === pagination.totalPages}
+            onClick={() => {
+              setPage((p) => p + 1);
+            }}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

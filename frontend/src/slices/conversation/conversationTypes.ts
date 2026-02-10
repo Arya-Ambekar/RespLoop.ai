@@ -24,6 +24,6 @@ export interface ConversationState {
     totalPages: number;
   };
   filters: {
-    statuses?: string;
+    resolution_statuses?: string;
   };
 }
