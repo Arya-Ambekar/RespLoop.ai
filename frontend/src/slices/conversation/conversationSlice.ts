@@ -7,6 +7,7 @@ import type { ConversationState, Conversation } from "./conversationTypes";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 import type { RootState } from "../../store/store";
+import { addMessage } from "../message/messageSlice";
 
 export const fetchConversations = createAsyncThunk(
   "conversations/fetchConversations",
@@ -26,8 +27,17 @@ export const fetchConversations = createAsyncThunk(
   },
 );
 
+export const fetchConversation = createAsyncThunk(
+  "conversations/fetchConversation",
+  async ({ id }: { id: string }) => {
+    const response = await axios.get(`${BASE_URL}/api/v1/conversations/${id}`);
+    return response.data.data;
+  },
+);
+
 const initialState: ConversationState = {
   conversations: [],
+  currentConversation: null,
   status: "idle",
   error: null,
   pagination: {
@@ -59,6 +69,29 @@ export const conversationSlice = createSlice({
         state.status = "succeeded";
         state.conversations = action.payload?.data;
         state.pagination = action.payload?.pagination;
+      })
+      .addCase(fetchConversation.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchConversation.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.currentConversation = action.payload?.data;
+        console.log(
+          "action.payload.data in fetchConversation: ",
+          action.payload.data,
+        );
+        console.log(
+          " state.currentConversation in fetchConversation: ",
+          state.currentConversation,
+        );
+      })
+      .addCase(addMessage.fulfilled, (state, action) => {
+        state.currentConversation?.Messages.push(
+          action.payload.data.userMessage,
+        );
+        state.currentConversation?.Messages.push(
+          action.payload.data.botMessage,
+        );
       });
   },
 });

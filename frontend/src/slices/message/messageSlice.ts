@@ -24,6 +24,7 @@ export const fetchMessages = createAsyncThunk(
 
 const initialState: MessageState = {
   messages: [],
+  currentConversationId: null,
   status: "idle",
   error: null,
 };
@@ -38,8 +39,13 @@ export const messageSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
+        state.status = "succeeded";
         state.messages = action.payload?.data;
         console.log(action.payload);
+      })
+      .addCase(addMessage.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.currentConversationId = action.payload?.data.conversationId;
       });
   },
 });

@@ -11,12 +11,34 @@ export interface Message {
 // Slice state types
 export interface MessageState {
   messages: Message[];
+  currentConversationId: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 // create message return type
 export interface createMessage {
-  userMessage: string;
-  botMessage: string;
+  userMessage: {
+    id: string;
+    text: string;
+    conversationId: string;
+    sent_at: string;
+    sender: string;
+    updatedAt: Date;
+    createdAt: Date;
+    deletedAt: Date | null;
+    senderId: string | null;
+  };
+  botMessage: {
+    id: string;
+    text: string;
+    conversationId: string;
+    sent_at: string;
+    sender: string;
+    updatedAt: Date;
+    createdAt: Date;
+    deletedAt: Date | null;
+    senderId: string | null;
+  };
+  conversationId: string;
 }

@@ -37,15 +37,15 @@
 .message-input-container {
   height: 70px;
   border-top: 1px solid #d6d6d6;
-}
-
-.message-input-form {
   padding: 15px;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
 }
+/* 
+.message-input-form {
+} */
 
 .message-input {
   background-color: transparent;
@@ -60,7 +60,7 @@
   gap: 20px;
 }
 
-/* .emoji-picker-containter {
+.emoji-picker-containter {
   display: flex;
   align-items: center;
   position: relative;
@@ -80,20 +80,20 @@
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
-} */
+}
 
 /* Search bar */
-/* .EmojiPickerReact .epr-search-container {
+.EmojiPickerReact .epr-search-container {
   padding: 4px 7px !important;
 }
 
 .EmojiPickerReact .epr-search-container input {
   height: 30px;
   font-size: 11px;
-} */
+}
 
 /* Category icons row */
-/* .EmojiPickerReact .epr-category-nav {
+.EmojiPickerReact .epr-category-nav {
   flex-wrap: nowrap !important;
   overflow-x: auto;
   padding: 1px 2px !important;
@@ -102,10 +102,10 @@
 .EmojiPickerReact .epr-category-nav img {
   width: 10px;
   height: 10px;
-} */
+}
 
 /* Emoji grid must grow properly */
-/* .EmojiPickerReact .epr-body {
+.EmojiPickerReact .epr-body {
   flex: 1 !important;
   min-height: 0 !important;
   overflow-y: auto !important;
@@ -118,7 +118,7 @@
 .EmojiPickerReact .epr-emoji-img {
   width: clamp(10px, 2vw, 14px) !important;
   height: clamp(10px, 2vw, 14px) !important;
-} */
+}
 
 .send-button {
   border-radius: 50px;

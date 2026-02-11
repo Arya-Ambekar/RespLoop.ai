@@ -12,9 +12,25 @@ export interface Conversation {
   };
 }
 
+// Types format for output of fetch by id conversations
+export interface currentConversation {
+  id: string;
+  serial_id: string;
+  last_messaged_at: Date | null;
+  resolution_status: string;
+  createdAt: Date;
+  userId: string;
+  Messages: {
+    id: string;
+    text: string;
+    sender: string;
+  }[];
+}
+
 // Slice state types
 export interface ConversationState {
   conversations: Conversation[];
+  currentConversation: currentConversation | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   pagination: {
