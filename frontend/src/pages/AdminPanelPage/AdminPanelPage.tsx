@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import AdminPanelHeader from "../../components/AdminPanelHeader/AdminPanelHeader";
 import "./AdminPanelPage.css";
-import Menu from "../../components/Menu/Menu";
+import Menu from "../../components/Menu/Menu.tsx";
 
 const AdminPanelPage = () => {
   return (

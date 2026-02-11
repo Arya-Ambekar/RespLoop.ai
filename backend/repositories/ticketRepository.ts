@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Conversation } from "../models/conversation.model.ts";
 import { Ticket } from "../models/ticket.model.ts";
 
@@ -6,12 +7,22 @@ export const getTicketsRepository = async (data: any) => {
     const page = Number(data.query?.page) || 1;
     const limit = Number(data.query?.limit) || 10;
     const offset = (page - 1) * limit;
+    const search = data.query.search;
+    const searchTerm =
+      typeof search === "string" && search.trim().length > 0
+        ? search.trim()
+        : null;
 
     const messages = await Ticket.findAndCountAll({
       attributes: ["id", "reason", "status", "conversationId"],
       include: [
         {
           model: Conversation,
+          where: {
+            ...(searchTerm && {
+              serial_id: { [Op.iLike]: `%${searchTerm}%` },
+            }),
+          },
           attributes: ["serial_id"],
         },
       ],

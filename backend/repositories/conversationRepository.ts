@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Conversation } from "../models/conversation.model.ts";
 import { User } from "../models/user.model.ts";
 
@@ -6,6 +7,11 @@ export const getConversationsRepository = async (data: any) => {
     const page = Number(data.query?.page) || 1;
     const limit = Number(data.query?.limit) || 10;
     const offset = (page - 1) * limit;
+    const search = data.query.search;
+    const searchTerm =
+      typeof search === "string" && search.trim().length > 0
+        ? search.trim()
+        : null;
 
     let conversations = await Conversation.findAndCountAll({
       attributes: [
@@ -19,6 +25,11 @@ export const getConversationsRepository = async (data: any) => {
       include: [
         {
           model: User,
+          where: {
+            ...(searchTerm && {
+              email_id: { [Op.iLike]: `%${searchTerm}%` },
+            }),
+          },
           attributes: ["email_id"],
         },
       ],

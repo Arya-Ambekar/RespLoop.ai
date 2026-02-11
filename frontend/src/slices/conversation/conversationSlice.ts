@@ -10,9 +10,17 @@ import type { RootState } from "../../store/store";
 
 export const fetchConversations = createAsyncThunk(
   "conversations/fetchConversations",
-  async ({ page = 1, limit = 10 }: { page?: number; limit?: number }) => {
+  async ({
+    page = 1,
+    limit = 10,
+    search,
+  }: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }) => {
     const response = await axios.get(`${BASE_URL}/api/v1/conversations`, {
-      params: { page, limit },
+      params: { page, limit, search },
     });
     return response.data.data;
   },

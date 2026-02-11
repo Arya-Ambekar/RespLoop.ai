@@ -1,12 +1,14 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
 import { MessagesSquare, Tag } from "lucide-react";
 
 import "./Menu.css";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { menuSelector, setActiveMenu } from "../../slices/menu/menuSlice";
+import { views } from "../../slices/menu/menuTypes";
 
 const Menu = () => {
-  const [isConversationMenu, setIsConversationMenu] = useState(true);
-  const [isTicketsMenu, setisTicketsMenu] = useState(false);
+  const dispatch = useAppDispatch();
+  const { activeView } = useAppSelector(menuSelector);
 
   return (
     <div className="menu-wrapper">
@@ -17,20 +19,19 @@ const Menu = () => {
         }
         style={{ textDecoration: "none", color: "black" }}
         onClick={() => {
-          setIsConversationMenu(true);
-          setisTicketsMenu(false);
+          dispatch(setActiveMenu(views.CONVERSATIONS));
         }}
       >
         <div
           className={
-            isConversationMenu
+            activeView === views.CONVERSATIONS
               ? "selected-menu-option-icon-wrapper"
               : "menu-option-icon-wrapper"
           }
         >
           <MessagesSquare
             className={
-              isConversationMenu
+              activeView === views.CONVERSATIONS
                 ? "selected-menu-option-icon"
                 : "menu-option-icon"
             }
@@ -38,7 +39,7 @@ const Menu = () => {
         </div>
         <p
           className={
-            isConversationMenu
+            activeView === views.CONVERSATIONS
               ? "selected-menu-option-name"
               : "menu-option-name"
           }
@@ -53,26 +54,29 @@ const Menu = () => {
         }
         style={{ textDecoration: "none", color: "black" }}
         onClick={() => {
-          setisTicketsMenu(true);
-          setIsConversationMenu(false);
+          dispatch(setActiveMenu(views.TICKETS));
         }}
       >
         <div
           className={
-            isTicketsMenu
+            activeView === views.TICKETS
               ? "selected-menu-option-icon-wrapper"
               : "menu-option-icon-wrapper"
           }
         >
           <Tag
             className={
-              isTicketsMenu ? "selected-menu-option-icon" : "menu-option-icon"
+              activeView === views.TICKETS
+                ? "selected-menu-option-icon"
+                : "menu-option-icon"
             }
           />
         </div>
         <p
           className={
-            isTicketsMenu ? "selected-menu-option-name" : "menu-option-name"
+            activeView === views.TICKETS
+              ? "selected-menu-option-name"
+              : "menu-option-name"
           }
         >
           Tickets

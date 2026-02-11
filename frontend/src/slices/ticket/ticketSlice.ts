@@ -10,9 +10,17 @@ import { BASE_URL } from "../../constants/constants";
 
 export const fetchTickets = createAsyncThunk(
   "tickets/fetchTickets",
-  async ({ page = 1, limit = 10 }: { page?: number; limit?: number }) => {
+  async ({
+    page = 1,
+    limit = 10,
+    search,
+  }: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }) => {
     const response = await axios.get(`${BASE_URL}/api/v1/tickets`, {
-      params: { page, limit },
+      params: { page, limit, search },
     });
     return response.data.data;
   },
