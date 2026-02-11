@@ -6,6 +6,7 @@ import {
   deleteMessageRepository,
 } from "../repositories/messageRepository.ts";
 import { createConversationRepository } from "../repositories/conversationRepository.ts";
+import { createUserRepository } from "../repositories/userRepository.ts";
 
 export const getMessagesService = async (data: any) => {
   try {
@@ -46,9 +47,16 @@ export const createMessageService = async (data: any) => {
       throw "Text cannot be empty.";
     }
 
-    // If no conversationId then create new conversation ---> This is only for development
-    if (!conversationId || conversationId === "") {
+    if (!conversationId || conversationId === null)
+      throw "conversation id is mandatory";
+
+    if (isEmail) {
+      // create user if email is sent in text
+      const user = await createUserRepository(data.text);
       data.body.serial_id = serial_id;
+      data.body.userId = user.id;
+
+      // create new conversation for new user
       conversation = await createConversationRepository(data);
       data.body.conversationId = conversation?.id;
     }
@@ -113,8 +121,13 @@ export const createMessageService = async (data: any) => {
       },
     ];
 
-    let response: { userMessage: any; botMessage?: any } = {
+    let response: {
+      userMessage: any;
+      botMessage?: any;
+      conversationId?: string;
+    } = {
       userMessage,
+      conversationId: conversationId,
     };
 
     if (!isEmail) {

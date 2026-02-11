@@ -41,7 +41,8 @@ export const getUserRepository = async ({ id }: { id: string }) => {
 
 export const createUserRepository = async (data: any) => {
   try {
-    const user = await User.create(data.body);
+    console.log("data in createUserRepository: ", data);
+    const user = await User.create(data);
     return user;
   } catch (error) {
     throw error;

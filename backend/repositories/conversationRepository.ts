@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import { Conversation } from "../models/conversation.model.ts";
 import { User } from "../models/user.model.ts";
+import { Message } from "../models/message.model.ts";
 
 export const getConversationsRepository = async (data: any) => {
   try {
@@ -62,6 +63,12 @@ export const getConversationRepository = async ({ id }: { id: string }) => {
         "resolution_status",
         "userId",
         "createdAt",
+      ],
+      include: [
+        {
+          model: Message,
+          attributes: ["id", "text", "sender"],
+        },
       ],
     });
     return conversation;
