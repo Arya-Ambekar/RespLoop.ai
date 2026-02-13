@@ -1,92 +1,133 @@
-import { SendHorizonal, Smile } from "lucide-react";
-import EmojiPicker from "emoji-picker-react";
+import { SendHorizonal } from "lucide-react";
+// import EmojiPicker from "emoji-picker-react";
 
 import "./ChatSpace.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { addMessage, messageSelector } from "../../slices/message/messageSlice";
-import { conversationSelector } from "../../slices/conversation/conversationSlice";
+import { addMessage } from "../../slices/message/messageSlice";
+import {
+  conversationSelector,
+  fetchConversation,
+  // fetchConversation,
+} from "../../slices/conversation/conversationSlice";
+import { addUser, userSelector } from "../../slices/user/userSlice";
 
 const ChatSpace = () => {
   const [inputText, setInputText] = useState("");
-  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
-  let isEmail = false;
+  const [email, setEmail] = useState("");
+  // const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
+  // let isEmail = false;
 
   const dispatch = useAppDispatch();
-  const { currentConversationId } = useAppSelector(messageSelector);
+  const { currentConversationId } = useAppSelector(userSelector);
   const { currentConversation } = useAppSelector(conversationSelector);
-  console.log("currentConversationId: ", currentConversationId);
-  console.log("currentConversation: ", currentConversation);
-  const handleEmoji = (e: any) => {
-    setInputText((prev) => prev + e.emoji);
+
+  // const handleEmoji = (e: any) => {
+  //   setInputText((prev) => prev + e.emoji);
+  // };
+
+  const addUserHandler = async () => {
+    console.log("clicked on add user button");
+    await dispatch(addUser(email));
   };
 
   const addMessageHandler = () => {
-    console.log("handler called", currentConversationId);
+    console.log("clicked on send button");
     if (!currentConversationId) return;
-    // e.preventDefault();
-
-    // check if inputText contains email. If yes then send "want to open new chat?" else dispatch addMessage()
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    isEmail = regex.test(inputText);
-    console.log("isEmail in addMessageHandler: ", isEmail);
     dispatch(
       addMessage({
         text: inputText,
         sent_at: new Date(),
-        isEmail,
         conversationId: currentConversationId,
       }),
     );
     setInputText("");
   };
 
-  // const addMessageHandler = (e: any) => {
-  //   console.log("handler called", currentConversationId);
-  //   if (!currentConversationId) return;
-  //   e.preventDefault();
+  useEffect(() => {
+    console.log("inside userEffect");
+    if (!currentConversationId) return;
 
-  //   // check if inputText contains email. If yes then send "want to open new chat?" else dispatch addMessage()
-  //   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  //   isEmail = regex.test(inputText);
-  //   console.log("isEmail in addMessageHandler: ", isEmail);
-  //   dispatch(
-  //     addMessage({
-  //       text: inputText,
-  //       sent_at: new Date(),
-  //       isEmail,
-  //       conversationId: currentConversationId,
-  //     }),
-  //   );
-  //   setInputText("");
-  // };
+    dispatch(fetchConversation({ id: currentConversationId }));
+  }, [dispatch, currentConversationId]);
 
-  // console.log(inputText);
   return (
-    <div className="ChatSpace-header">
-      <div className="message-container">
-        <p className="current-time">Today, 10:15</p>
-        <div className="ai-message-bubble">
-          <p>please login for starting conversation.</p>
+    <>
+      {!currentConversationId && (
+        <div className="email-input-wrapper">
+          <div className="email-input-container">
+            <div className="email-input-title">
+              <h3>Welcome to RespLoop.ai</h3>
+              <p>Please enter your email for starting conversation.</p>
+            </div>
+            <div className="email-input-div">
+              <input
+                className="email-input"
+                type="text"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                placeholder="example@mail.com"
+              />
+              <button onClick={addUserHandler}>Login</button>
+            </div>
+          </div>
         </div>
-        <div className="user-message-bubble">
-          <p>please login for starting conversation.</p>
-        </div>
-      </div>
-      <div className="message-input-container">
-        {/* <form className="message-input-form" onSubmit={addMessageHandler}> */}
-        <input
-          className="message-input"
-          type="text"
-          value={inputText}
-          onChange={(e) => {
-            setInputText(e.target.value);
-          }}
-          placeholder="Type your message..."
-        />
+      )}
+      {currentConversationId && (
+        <>
+          <div className="ChatSpace-header">
+            <div className="message-container">
+              <p className="current-time">Today, 10:15</p>
+              <div className="ai-message-bubble">
+                👋 Hi! I’m here to help. What can I assist you with today?
+              </div>
 
-        <div className="message-input-actions">
-          <div
+              {currentConversation &&
+                currentConversation.Messages &&
+                currentConversation.Messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`${message.sender === "ai" ? `ai-message-bubble` : null} 
+              ${message.sender === "user" ? `user-message-bubble` : null}`}
+                  >
+                    <p>{message.text}</p>
+                  </div>
+                ))}
+            </div>
+            <div className="message-input-container">
+              <input
+                className="message-input"
+                type="text"
+                value={inputText}
+                onChange={(e) => {
+                  setInputText(e.target.value);
+                }}
+                placeholder="Type your message..."
+              />
+
+              <div className="message-input-actions">
+                <button
+                  className="send-button"
+                  // type="submit"
+                  onClick={addMessageHandler}
+                >
+                  <SendHorizonal className="send-button-icon" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+};
+
+export default ChatSpace;
+
+{
+  /* <div
             className="emoji-picker-containter"
             // onClick={(e) => e.stopPropagation()}
           >
@@ -101,55 +142,5 @@ const ChatSpace = () => {
                 previewConfig={{ showPreview: false }}
               />
             </div>
-          </div>
-
-          <button
-            className="send-button"
-            type="submit"
-            onClick={addMessageHandler}
-          >
-            <SendHorizonal className="send-button-icon" />
-          </button>
-        </div>
-        {/* </form> */}
-      </div>
-    </div>
-  );
-};
-
-export default ChatSpace;
-
-{
-  /* {isEmail && (
-          <div className="decide-new-chat-option">
-            <div className="ai-message-bubble">
-              <p>Thank you! Would you like to start a new conversation?</p>
-            </div>
-            <div className="chat-buttons">
-              <button
-                className="chat-button"
-                onClick={() => {
-                  console.log("New chat opened");
-                }}
-              >
-                New chat
-              </button>
-              <button
-                className="chat-button"
-                onClick={() => console.log("old chat opened")}
-              >
-                Continue this Chat
-              </button>
-            </div>
-          </div>
-        )} */
-}
-
-{
-  /* <button
-              className="document-button"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Paperclip className="document-button-icon" />
-            </button> */
+          </div> */
 }

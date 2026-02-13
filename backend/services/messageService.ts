@@ -5,8 +5,7 @@ import {
   updateMessageRepository,
   deleteMessageRepository,
 } from "../repositories/messageRepository.ts";
-import { createConversationRepository } from "../repositories/conversationRepository.ts";
-import { createUserRepository } from "../repositories/userRepository.ts";
+import { createUserService } from "./userService.ts";
 
 export const getMessagesService = async (data: any) => {
   try {
@@ -39,9 +38,7 @@ export const getMessageService = async (data: any) => {
 
 export const createMessageService = async (data: any) => {
   try {
-    let conversation;
-    const serial_id = "CONVO-002";
-    const { text, conversationId, isEmail } = data.body;
+    const { text, conversationId } = data.body;
     let botMessage;
     if (!text?.trim()) {
       throw "Text cannot be empty.";
@@ -50,20 +47,8 @@ export const createMessageService = async (data: any) => {
     if (!conversationId || conversationId === null)
       throw "conversation id is mandatory";
 
-    if (isEmail) {
-      // create user if email is sent in text
-      const user = await createUserRepository(data.text);
-      data.body.serial_id = serial_id;
-      data.body.userId = user.id;
-
-      // create new conversation for new user
-      conversation = await createConversationRepository(data);
-      data.body.conversationId = conversation?.id;
-    }
-
     // Create message for user
     data.body.sender = "user";
-    console.log("data.body of user: ", data.body);
     let userMessage = await createMessageRepository(data);
 
     // Bot logic:
@@ -121,37 +106,27 @@ export const createMessageService = async (data: any) => {
       },
     ];
 
-    let response: {
-      userMessage: any;
-      botMessage?: any;
-      conversationId?: string;
-    } = {
-      userMessage,
-      conversationId: conversationId,
-    };
+    const normalizedText = text.toLowerCase().trim();
 
-    if (!isEmail) {
-      const normalizedText = text.toLowerCase().trim();
+    let botResponse = "";
 
-      let botResponse = "";
-
-      for (let message of botResponses) {
-        if (message.examples.includes(normalizedText)) {
-          botResponse = message.response;
-        }
+    for (let message of botResponses) {
+      if (message.examples.includes(normalizedText)) {
+        botResponse = message.response;
       }
-
-      data.body.text = botResponse;
-      data.body.sender = "ai";
-      console.log("data.body of ai: ", data.body);
-
-      botMessage = await createMessageRepository(data);
-      response.botMessage = botMessage;
     }
 
-    console.log(userMessage);
-    console.log(botMessage);
+    data.body.text = botResponse;
+    data.body.sender = "ai";
 
+    botMessage = await createMessageRepository(data);
+
+    let response = {
+      userMessage,
+      botMessage,
+    };
+
+    console.log("response in createMessageService: ", response);
     return response;
   } catch (error) {
     throw error;

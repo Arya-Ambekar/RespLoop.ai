@@ -11,7 +11,6 @@ export interface Message {
 // Slice state types
 export interface MessageState {
   messages: Message[];
-  currentConversationId: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -40,5 +39,4 @@ export interface createMessage {
     deletedAt: Date | null;
     senderId: string | null;
   };
-  conversationId: string;
 }

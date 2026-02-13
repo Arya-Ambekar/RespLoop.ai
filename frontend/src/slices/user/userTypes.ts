@@ -9,4 +9,5 @@ export interface UserState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   currentUser: User | null;
+  currentConversationId: string | null;
 }

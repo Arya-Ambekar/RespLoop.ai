@@ -28,6 +28,7 @@ const SearchBar = ({
 
   const handleClear = () => {
     setValue("");
+    onSearch("");
   };
 
   console.log(value);

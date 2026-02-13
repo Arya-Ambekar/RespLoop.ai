@@ -6,7 +6,7 @@ import type { RootState } from "../../store/store";
 
 export const addMessage = createAsyncThunk<
   { data: createMessage },
-  { text: string; conversationId?: string; sent_at: Date; isEmail: boolean }
+  { text: string; conversationId?: string; sent_at: Date }
 >("messages/addMessage", async (message) => {
   const response = await axios.post(`${BASE_URL}/api/v1/messages`, message);
   return response.data;
@@ -24,7 +24,6 @@ export const fetchMessages = createAsyncThunk(
 
 const initialState: MessageState = {
   messages: [],
-  currentConversationId: null,
   status: "idle",
   error: null,
 };
@@ -42,10 +41,6 @@ export const messageSlice = createSlice({
         state.status = "succeeded";
         state.messages = action.payload?.data;
         console.log(action.payload);
-      })
-      .addCase(addMessage.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.currentConversationId = action.payload?.data.conversationId;
       });
   },
 });

@@ -3,6 +3,7 @@ import {
   getUserRepository,
   createUserRepository,
 } from "../repositories/userRepository.ts";
+import { createConversationRepository } from "../repositories/conversationRepository.ts";
 
 export const getUsersService = async (data: any) => {
   try {
@@ -35,8 +36,20 @@ export const getUserService = async (data: any) => {
 
 export const createUserService = async (data: any) => {
   try {
+    const serial_id = "CONVO-002";
+    console.log("data in createUserService: ", data);
+    data.body.email_id = data.body?.email;
     let user = await createUserRepository(data);
-    return user;
+    data.body.serial_id = serial_id;
+    data.body.userId = user.id;
+
+    // create new conversation for new user
+    let conversation = await createConversationRepository(data);
+    let response = {
+      user,
+      conversation,
+    };
+    return response;
   } catch (error) {
     throw error;
   }

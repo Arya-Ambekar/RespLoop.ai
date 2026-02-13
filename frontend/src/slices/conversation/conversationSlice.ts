@@ -70,15 +70,17 @@ export const conversationSlice = createSlice({
         state.conversations = action.payload?.data;
         state.pagination = action.payload?.pagination;
       })
-      .addCase(fetchConversation.pending, (state) => {
-        state.status = "loading";
-      })
+      // .addCase(fetchConversation.pending, (state) => {
+      //   console.log("fetchConversation is loading");
+      //   state.status = "loading";
+      // })
       .addCase(fetchConversation.fulfilled, (state, action) => {
+        console.log("fetchConversation is called");
         state.status = "succeeded";
-        state.currentConversation = action.payload?.data;
+        state.currentConversation = action.payload;
         console.log(
           "action.payload.data in fetchConversation: ",
-          action.payload.data,
+          action.payload,
         );
         console.log(
           " state.currentConversation in fetchConversation: ",
@@ -86,11 +88,27 @@ export const conversationSlice = createSlice({
         );
       })
       .addCase(addMessage.fulfilled, (state, action) => {
-        state.currentConversation?.Messages.push(
-          action.payload.data.userMessage,
+        console.log("addMessage case in conversation slice");
+        console.log(
+          "currentConversation before uppdating: ",
+          state.currentConversation,
         );
         state.currentConversation?.Messages.push(
-          action.payload.data.botMessage,
+          action.payload.data?.userMessage,
+        );
+        console.log(
+          "currentConversation after adding userMessage: ",
+          state.currentConversation,
+        );
+
+        if (action.payload.data.botMessage) {
+          state.currentConversation?.Messages.push(
+            action.payload.data?.botMessage,
+          );
+        }
+        console.log(
+          "currentConversation after adding botMessage: ",
+          state.currentConversation,
         );
       });
   },
