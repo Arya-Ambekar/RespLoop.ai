@@ -12,13 +12,14 @@ import messageRoutes from "./routes/messageRoutes.ts";
 import userRoutes from "./routes/userRoutes.ts";
 import conversationRoutes from "./routes/conversationRoutes.ts";
 import ticketRoutes from "./routes/ticketRoutes.ts";
+import { createMessageService } from "./services/messageService.ts";
 
 dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT;
-const server = createServer(app);
-const io = new Server(server);
+
+// OPEN AI Key
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -47,13 +48,38 @@ app.use("/api/v1", ticketRoutes);
   }
 })();
 
+// socket.IO integration
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
 io.on("connection", (socket) => {
-  console.log("user connected");
+  console.log("user connected", socket.id);
+
+  socket.on("chat", async (data, callback) => {
+    try {
+      console.log("data in server.ts: ", data);
+      console.log("callback in server.ts: ", callback);
+      const savedMessage = await createMessageService(data);
+      console.log("savedMessage in server.ts: ", savedMessage);
+      io.emit("chat", savedMessage);
+
+      callback({ success: true });
+    } catch (error) {
+      callback({ error: "Failed to save message" });
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

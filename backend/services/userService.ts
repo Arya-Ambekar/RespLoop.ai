@@ -37,7 +37,7 @@ export const getUserService = async (data: any) => {
 export const createUserService = async (data: any) => {
   try {
     const serial_id = "CONVO-002";
-    console.log("data in createUserService: ", data);
+    // console.log("data in createUserService: ", data);
     data.body.email_id = data.body?.email;
     let user = await createUserRepository(data);
     data.body.serial_id = serial_id;

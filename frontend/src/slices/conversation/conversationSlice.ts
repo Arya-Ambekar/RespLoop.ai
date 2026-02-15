@@ -7,7 +7,8 @@ import type { ConversationState, Conversation } from "./conversationTypes";
 import axios from "axios";
 import { BASE_URL } from "../../constants/constants";
 import type { RootState } from "../../store/store";
-import { addMessage } from "../message/messageSlice";
+// import { addMessage } from "../message/messageSlice";
+import { socketClient } from "../../main";
 
 export const fetchConversations = createAsyncThunk(
   "conversations/fetchConversations",
@@ -35,6 +36,19 @@ export const fetchConversation = createAsyncThunk(
   },
 );
 
+// export const fetchMessages = createAsyncThunk(
+//   "fetchMessages",
+//   async function (_, { getState, dispatch }) {
+//     console.log("state ", getState());
+//     return await socketClient.on("chat", (receivedMessages: any) =>
+//       dispatch({
+//         type: "conversations/saveReceivedMessages",
+//         payload: { messages: receivedMessages },
+//       }),
+//     );
+//   },
+// );
+
 const initialState: ConversationState = {
   conversations: [],
   currentConversation: null,
@@ -59,6 +73,15 @@ export const conversationSlice = createSlice({
       state.filters.resolution_statuses =
         action.payload === "All Statuses" ? undefined : action.payload;
     },
+    saveReceivedMessages: (state, action) => {
+      console.log(
+        "state.currentConversation before adding new msg: ",
+        state.currentConversation,
+      );
+      console.log("action.payload: ", action.payload);
+      state.currentConversation?.Messages.push(action.payload.userMessage);
+      state.currentConversation?.Messages.push(action.payload.botMessage);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,10 +93,6 @@ export const conversationSlice = createSlice({
         state.conversations = action.payload?.data;
         state.pagination = action.payload?.pagination;
       })
-      // .addCase(fetchConversation.pending, (state) => {
-      //   console.log("fetchConversation is loading");
-      //   state.status = "loading";
-      // })
       .addCase(fetchConversation.fulfilled, (state, action) => {
         console.log("fetchConversation is called");
         state.status = "succeeded";
@@ -86,37 +105,42 @@ export const conversationSlice = createSlice({
           " state.currentConversation in fetchConversation: ",
           state.currentConversation,
         );
-      })
-      .addCase(addMessage.fulfilled, (state, action) => {
-        console.log("addMessage case in conversation slice");
-        console.log(
-          "currentConversation before uppdating: ",
-          state.currentConversation,
-        );
-        state.currentConversation?.Messages.push(
-          action.payload.data?.userMessage,
-        );
-        console.log(
-          "currentConversation after adding userMessage: ",
-          state.currentConversation,
-        );
-
-        if (action.payload.data.botMessage) {
-          state.currentConversation?.Messages.push(
-            action.payload.data?.botMessage,
-          );
-        }
-        console.log(
-          "currentConversation after adding botMessage: ",
-          state.currentConversation,
-        );
       });
+    // .addCase(fetchMessages.pending, (state) => {
+    //   state.status = "loading";
+    // });
+    // .addCase(fetchMessages.fulfilled, (state, action) => {});
+    // .addCase(addMessage.fulfilled, (state, action) => {
+    //   console.log("addMessage case in conversation slice");
+    //   console.log(
+    //     "currentConversation before uppdating: ",
+    //     state.currentConversation,
+    //   );
+    //   state.currentConversation?.Messages.push(
+    //     action.payload.data?.userMessage,
+    //   );
+    //   console.log(
+    //     "currentConversation after adding userMessage: ",
+    //     state.currentConversation,
+    //   );
+
+    //   if (action.payload.data.botMessage) {
+    //     state.currentConversation?.Messages.push(
+    //       action.payload.data?.botMessage,
+    //     );
+    //   }
+    //   console.log(
+    //     "currentConversation after adding botMessage: ",
+    //     state.currentConversation,
+    //   );
+    // });
   },
 });
 
 export const conversationSelector = (state: RootState) => state.conversations;
 export default conversationSlice.reducer;
-export const { setResolutionStatusesFilter } = conversationSlice.actions;
+export const { setResolutionStatusesFilter, saveReceivedMessages } =
+  conversationSlice.actions;
 
 export const filteredConversations = createSelector(
   [
@@ -140,3 +164,9 @@ export const filteredConversations = createSelector(
     ];
   },
 );
+
+export const startChatListener = () => (dispatch: any) => {
+  socketClient.on("chat", (receivedMessage: any) => {
+    dispatch(saveReceivedMessages(receivedMessage));
+  });
+};

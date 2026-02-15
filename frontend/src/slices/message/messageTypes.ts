@@ -13,6 +13,7 @@ export interface MessageState {
   messages: Message[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  messageStatus: "idle" | "Sending" | "Sent successfully" | "Send failed";
 }
 
 // create message return type

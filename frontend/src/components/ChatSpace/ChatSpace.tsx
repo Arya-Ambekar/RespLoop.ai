@@ -2,17 +2,20 @@ import { SendHorizonal } from "lucide-react";
 // import EmojiPicker from "emoji-picker-react";
 
 import "./ChatSpace.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addMessage } from "../../slices/message/messageSlice";
 import {
   conversationSelector,
   fetchConversation,
+  startChatListener,
   // fetchConversation,
 } from "../../slices/conversation/conversationSlice";
 import { addUser, userSelector } from "../../slices/user/userSlice";
+// import { connectWS } from "../../socketClient";
 
 const ChatSpace = () => {
+  const currentMessage = useRef<HTMLDivElement | null>(null);
   const [inputText, setInputText] = useState("");
   const [email, setEmail] = useState("");
   // const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
@@ -25,6 +28,30 @@ const ChatSpace = () => {
   // const handleEmoji = (e: any) => {
   //   setInputText((prev) => prev + e.emoji);
   // };
+
+  useEffect(() => {
+    if (currentMessage.current) {
+      currentMessage.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  }, [dispatch, currentConversation]);
+
+  useEffect(() => {
+    dispatch(startChatListener());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("inside userEffect");
+    if (!currentConversationId) return;
+
+    dispatch(fetchConversation({ id: currentConversationId }));
+  }, [dispatch, currentConversationId]);
+
+  // useEffect(() => {
+  //   socket.current = connectWS();
+  // }, []);
 
   const addUserHandler = async () => {
     console.log("clicked on add user button");
@@ -43,13 +70,6 @@ const ChatSpace = () => {
     );
     setInputText("");
   };
-
-  useEffect(() => {
-    console.log("inside userEffect");
-    if (!currentConversationId) return;
-
-    dispatch(fetchConversation({ id: currentConversationId }));
-  }, [dispatch, currentConversationId]);
 
   return (
     <>
@@ -78,7 +98,7 @@ const ChatSpace = () => {
       {currentConversationId && (
         <>
           <div className="ChatSpace-header">
-            <div className="message-container">
+            <div className="message-container" ref={currentMessage}>
               <p className="current-time">Today, 10:15</p>
               <div className="ai-message-bubble">
                 👋 Hi! I’m here to help. What can I assist you with today?

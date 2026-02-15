@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { StrictMode } from "react";
+// import { StrictMode } from "react";
 import {
   Route,
   createBrowserRouter,
@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-// import App from "./App.tsx";
+import App from "./App.tsx";
 import ChatBotPage from "./pages/ChatBotPage/ChatBotPage";
 import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage";
 import ConversationsView from "./components/ConversationsView/ConversationsView.tsx";
@@ -15,7 +15,11 @@ import TicketsView from "./components/TicketsView/TicketsView.tsx";
 import ConversationDetailView from "./components/ConversationDetailView/ConversationDetailView.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
+import SocketClient from "./socketClient.ts";
 
+export const socketClient = new SocketClient();
+
+console.log("socketClient: ", socketClient);
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -32,9 +36,10 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <StrictMode>
+    {/* <StrictMode> */}
+    <App>
       <RouterProvider router={router} />
-    </StrictMode>
-    ,
+    </App>
+    {/* </StrictMode> */},
   </Provider>,
 );
