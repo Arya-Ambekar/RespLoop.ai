@@ -5,6 +5,7 @@ import {
   updateMessageRepository,
   deleteMessageRepository,
 } from "../repositories/messageRepository.ts";
+import { generateBotResponse } from "./AIResponseService.ts";
 import { createUserService } from "./userService.ts";
 
 export const getMessagesService = async (data: any) => {
@@ -53,70 +54,75 @@ export const createMessageService = async (data: any) => {
 
     // Bot logic:
     // Chatbot static responses:
-    const botResponses = [
-      {
-        intent: "greeting",
-        examples: ["hi", "hello", "hey", "good morning"],
-        response: "Hi there! 👋 How can I help you today?",
-      },
-      {
-        intent: "goodbye",
-        examples: ["bye", "goodbye", "see you", "exit"],
-        response: "Goodbye! Have a great day 😊",
-      },
-      {
-        intent: "thanks",
-        examples: ["thanks", "thank you", "appreciate it"],
-        response: "You're welcome! Happy to help 🙌",
-      },
-      {
-        intent: "help",
-        examples: ["help", "what can you do", "options"],
-        response:
-          "I can answer common questions, provide information, and guide you through available options.",
-      },
-      {
-        intent: "hours",
-        examples: ["opening hours", "working hours", "when are you open"],
-        response: "We’re open Monday to Friday, 9 AM to 6 PM.",
-      },
-      {
-        intent: "location",
-        examples: ["where are you located", "address", "location"],
-        response:
-          "We’re located at our main office. Please visit our website for the full address.",
-      },
-      {
-        intent: "contact",
-        examples: ["contact", "support", "customer service"],
-        response:
-          "You can contact our support team via email or phone. Would you like the details?",
-      },
-      {
-        intent: "pricing",
-        examples: ["price", "cost", "pricing"],
-        response:
-          "Pricing depends on the service. Let me know what you're looking for!",
-      },
-      {
-        intent: "unknown",
-        examples: [],
-        response:
-          "Sorry, I didn’t quite understand that. Could you rephrase or ask something else?",
-      },
-    ];
+    // const botResponses = [
+    //   {
+    //     intent: "greeting",
+    //     examples: ["hi", "hello", "hey", "good morning"],
+    //     response: "Hi there! 👋 How can I help you today?",
+    //   },
+    //   {
+    //     intent: "goodbye",
+    //     examples: ["bye", "goodbye", "see you", "exit"],
+    //     response: "Goodbye! Have a great day 😊",
+    //   },
+    //   {
+    //     intent: "thanks",
+    //     examples: ["thanks", "thank you", "appreciate it"],
+    //     response: "You're welcome! Happy to help 🙌",
+    //   },
+    //   {
+    //     intent: "help",
+    //     examples: ["help", "what can you do", "options"],
+    //     response:
+    //       "I can answer common questions, provide information, and guide you through available options.",
+    //   },
+    //   {
+    //     intent: "hours",
+    //     examples: ["opening hours", "working hours", "when are you open"],
+    //     response: "We’re open Monday to Friday, 9 AM to 6 PM.",
+    //   },
+    //   {
+    //     intent: "location",
+    //     examples: ["where are you located", "address", "location"],
+    //     response:
+    //       "We’re located at our main office. Please visit our website for the full address.",
+    //   },
+    //   {
+    //     intent: "contact",
+    //     examples: ["contact", "support", "customer service"],
+    //     response:
+    //       "You can contact our support team via email or phone. Would you like the details?",
+    //   },
+    //   {
+    //     intent: "pricing",
+    //     examples: ["price", "cost", "pricing"],
+    //     response:
+    //       "Pricing depends on the service. Let me know what you're looking for!",
+    //   },
+    //   {
+    //     intent: "unknown",
+    //     examples: [],
+    //     response:
+    //       "Sorry, I didn’t quite understand that. Could you rephrase or ask something else?",
+    //   },
+    // ];
 
-    const normalizedText = text.toLowerCase().trim();
+    // const normalizedText = text.toLowerCase().trim();
 
-    let botResponse = "";
+    // let botResponse = "";
 
-    for (let message of botResponses) {
-      if (message.examples.includes(normalizedText)) {
-        botResponse = message.response;
-      }
-    }
+    // for (let message of botResponses) {
+    //   if (message.examples.includes(normalizedText)) {
+    //     botResponse = message.response;
+    //   }
+    // }
 
-    data.body.text = botResponse;
+    let botResponse = await generateBotResponse(
+      data.body.text,
+      data.body.conversationId,
+    );
+    // console.log("botResponse in createMessageService: ", botResponse.message);
+    data.body.text = botResponse.message;
     data.body.sender = "ai";
 
     botMessage = await createMessageRepository(data);
@@ -126,7 +132,7 @@ export const createMessageService = async (data: any) => {
       botMessage,
     };
 
-    console.log("response in createMessageService: ", response);
+    // console.log("response in createMessageService: ", response);
     return response;
   } catch (error) {
     throw error;

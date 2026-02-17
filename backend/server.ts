@@ -5,7 +5,6 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { sequelize } from "./models/index.ts";
-import OpenAI from "openai";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import messageRoutes from "./routes/messageRoutes.ts";
@@ -18,11 +17,6 @@ dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT;
-
-// OPEN AI Key
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 app.use(express.json());
 app.use(cors());
@@ -63,10 +57,10 @@ io.on("connection", (socket) => {
 
   socket.on("chat", async (data, callback) => {
     try {
-      console.log("data in server.ts: ", data);
-      console.log("callback in server.ts: ", callback);
+      // console.log("data in server.ts: ", data);
+      // console.log("callback in server.ts: ", callback);
       const savedMessage = await createMessageService(data);
-      console.log("savedMessage in server.ts: ", savedMessage);
+      // console.log("savedMessage in server.ts: ", savedMessage);
       io.emit("chat", savedMessage);
 
       callback({ success: true });

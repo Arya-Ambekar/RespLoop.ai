@@ -37,6 +37,7 @@ export const getTicketService = async (data: any) => {
 
 export const createTicketService = async (data: any) => {
   try {
+    // console.log("inside createTicketService: ", data);
     let ticket = await createTicketRepository(data);
     return ticket;
   } catch (error) {

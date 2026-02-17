@@ -13,6 +13,7 @@ import {
 } from "../../slices/conversation/conversationSlice";
 import { addUser, userSelector } from "../../slices/user/userSlice";
 // import { connectWS } from "../../socketClient";
+import ReactMarkdown from "react-markdown";
 
 const ChatSpace = () => {
   const currentMessage = useRef<HTMLDivElement | null>(null);
@@ -112,7 +113,9 @@ const ChatSpace = () => {
                     className={`${message.sender === "ai" ? `ai-message-bubble` : null} 
               ${message.sender === "user" ? `user-message-bubble` : null}`}
                   >
-                    <p>{message.text}</p>
+                    <div>
+                      <ReactMarkdown>{message.text}</ReactMarkdown>
+                    </div>
                   </div>
                 ))}
             </div>
@@ -128,11 +131,7 @@ const ChatSpace = () => {
               />
 
               <div className="message-input-actions">
-                <button
-                  className="send-button"
-                  // type="submit"
-                  onClick={addMessageHandler}
-                >
+                <button className="send-button" onClick={addMessageHandler}>
                   <SendHorizonal className="send-button-icon" />
                 </button>
               </div>

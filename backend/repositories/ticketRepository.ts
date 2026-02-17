@@ -13,7 +13,7 @@ export const getTicketsRepository = async (data: any) => {
         ? search.trim()
         : null;
 
-    const messages = await Ticket.findAndCountAll({
+    const tickets = await Ticket.findAndCountAll({
       attributes: ["id", "reason", "status", "conversationId"],
       include: [
         {
@@ -30,12 +30,12 @@ export const getTicketsRepository = async (data: any) => {
       offset,
     });
 
-    const totalCount = Array.isArray(messages.count)
-      ? messages.count.length
-      : messages.count;
+    const totalCount = Array.isArray(tickets.count)
+      ? tickets.count.length
+      : tickets.count;
 
     return {
-      rows: messages.rows,
+      rows: tickets.rows,
       count: totalCount,
       page,
       limit,
@@ -47,12 +47,12 @@ export const getTicketsRepository = async (data: any) => {
 
 export const getTicketRepository = async ({ id }: { id: string }) => {
   try {
-    const message = await Ticket.findOne({
+    const ticket = await Ticket.findOne({
       where: { id },
       attributes: ["id", "reason", "status", "conversationId"],
     });
 
-    return message;
+    return ticket;
   } catch (error) {
     throw error;
   }
@@ -60,8 +60,9 @@ export const getTicketRepository = async ({ id }: { id: string }) => {
 
 export const createTicketRepository = async (data: any) => {
   try {
-    const message = await Ticket.create(data.body);
-    return message;
+    console.log("inside createTicketRepository: ", data);
+    const ticket = await Ticket.create(data);
+    return ticket;
   } catch (error) {
     throw error;
   }
@@ -71,12 +72,12 @@ export const updateTicketRepository = async (data: any) => {
   try {
     const { id } = data.params;
 
-    const message = await Ticket.update(data.body, {
+    const ticket = await Ticket.update(data.body, {
       where: { id },
       returning: true,
     });
 
-    return message;
+    return ticket;
   } catch (error) {
     throw error;
   }
@@ -84,8 +85,8 @@ export const updateTicketRepository = async (data: any) => {
 
 export const deleteTicketRepository = async (data: any) => {
   try {
-    const message = await Ticket.destroy({ where: { id: data } });
-    return message;
+    const ticket = await Ticket.destroy({ where: { id: data } });
+    return ticket;
   } catch (error) {
     throw error;
   }

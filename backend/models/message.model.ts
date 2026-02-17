@@ -32,7 +32,7 @@ Message.init(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    text: DataTypes.STRING,
+    text: DataTypes.TEXT,
     sender: DataTypes.ENUM("user", "ai"),
     sent_at: {
       type: DataTypes.DATE,

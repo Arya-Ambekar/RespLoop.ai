@@ -43,7 +43,12 @@
   padding: 7px 12px;
   background-color: #f3f3f3;
   border-radius: 13px 13px 13px 0px;
-  width: 300px;
+  max-width: 340px;
+  width: fit-content;
+}
+
+.ai-message-bubble div {
+  margin: 0px 0px 0px 10px;
 }
 
 .user-message-bubble {
