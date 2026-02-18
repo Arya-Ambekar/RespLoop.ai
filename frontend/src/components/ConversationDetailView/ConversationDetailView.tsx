@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./ConversationDetailView.css";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
@@ -11,6 +11,10 @@ import { useEffect } from "react";
 const ConversationDetailView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { state } = location;
+  console.log("state in ConversationDetailView: ", state);
 
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector(messageSelector);
@@ -30,8 +34,8 @@ const ConversationDetailView = () => {
         <div className="user-info-header">
           <div className="profile-picture">A</div>
           <div className="user-info">
-            <div className="user-mail">alanwalker@abc.com</div>
-            <div className="time">Today, 22:14</div>
+            <div className="user-mail">{state.user}</div>
+            <div className="time">{state.last_msg_time}</div>
           </div>
         </div>
         <div className="conversation-window">

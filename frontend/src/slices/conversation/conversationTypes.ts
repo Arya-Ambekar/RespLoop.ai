@@ -16,7 +16,7 @@ export interface Conversation {
 export interface currentConversation {
   id: string;
   serial_id: string;
-  last_messaged_at: Date | null;
+  last_messaged_at: string;
   resolution_status: string;
   createdAt: Date;
   userId: string;

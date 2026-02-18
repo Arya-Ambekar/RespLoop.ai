@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
       // console.log("data in server.ts: ", data);
       // console.log("callback in server.ts: ", callback);
       const savedMessage = await createMessageService(data);
-      // console.log("savedMessage in server.ts: ", savedMessage);
+      console.log("savedMessage in server.ts: ", savedMessage);
       io.emit("chat", savedMessage);
 
       callback({ success: true });

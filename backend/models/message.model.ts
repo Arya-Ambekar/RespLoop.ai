@@ -23,6 +23,7 @@ export class Message
   declare sender: SenderType;
   declare sent_at: Date | null;
   declare conversationId: string | null;
+  declare createdAt: Date;
 }
 
 Message.init(

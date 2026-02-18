@@ -72,6 +72,7 @@ const ChatSpace = () => {
     setInputText("");
   };
 
+  console.log("currentConversation: ", currentConversation);
   return (
     <>
       {!currentConversationId && (
@@ -100,7 +101,9 @@ const ChatSpace = () => {
         <>
           <div className="ChatSpace-header">
             <div className="message-container" ref={currentMessage}>
-              <p className="current-time">Today, 10:15</p>
+              <p className="current-time">
+                {currentConversation?.last_messaged_at}
+              </p>
               <div className="ai-message-bubble">
                 👋 Hi! I’m here to help. What can I assist you with today?
               </div>

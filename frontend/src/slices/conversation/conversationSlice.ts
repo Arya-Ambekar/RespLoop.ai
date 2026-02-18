@@ -81,6 +81,13 @@ export const conversationSlice = createSlice({
       console.log("action.payload: ", action.payload);
       state.currentConversation?.Messages.push(action.payload.userMessage);
       state.currentConversation?.Messages.push(action.payload.botMessage);
+      if (state.currentConversation) {
+        state.currentConversation.last_messaged_at = action.payload.msgDateTime;
+      }
+      console.log(
+        "state.currentConversation.last_messaged_at: ",
+        state.currentConversation?.last_messaged_at,
+      );
     },
   },
   extraReducers: (builder) => {

@@ -70,7 +70,12 @@ const ConversationsView = () => {
                     key={convo.id}
                     onClick={() => {
                       console.log("table row clicked", convo.id);
-                      navigate(`/admin/conversations/${convo.id}`);
+                      navigate(`/admin/conversations/${convo.id}`, {
+                        state: {
+                          user: convo.User.email_id,
+                          last_msg_time: convo.formatted_last_messaged_at,
+                        },
+                      });
                     }}
                   >
                     <td>{convo.serial_id}</td>

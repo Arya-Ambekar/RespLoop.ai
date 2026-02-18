@@ -5,8 +5,8 @@ import {
   updateMessageRepository,
   deleteMessageRepository,
 } from "../repositories/messageRepository.ts";
+import { formatDateTime } from "../utilities/reusableFunctions/DateFormatter.ts";
 import { generateBotResponse } from "./AIResponseService.ts";
-import { createUserService } from "./userService.ts";
 
 export const getMessagesService = async (data: any) => {
   try {
@@ -127,9 +127,14 @@ export const createMessageService = async (data: any) => {
 
     botMessage = await createMessageRepository(data);
 
+    console.log("userMessage: ", userMessage.createdAt);
+    const msgDateTime = await formatDateTime(userMessage.createdAt);
+    console.log("msgDateTime: ", msgDateTime);
+
     let response = {
       userMessage,
       botMessage,
+      msgDateTime: msgDateTime,
     };
 
     // console.log("response in createMessageService: ", response);

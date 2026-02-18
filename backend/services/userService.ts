@@ -4,6 +4,7 @@ import {
   createUserRepository,
 } from "../repositories/userRepository.ts";
 import { createConversationRepository } from "../repositories/conversationRepository.ts";
+import { generateConversationSerialNumber } from "../utilities/conversationSerialNumberGenerator.ts";
 
 export const getUsersService = async (data: any) => {
   try {
@@ -36,11 +37,12 @@ export const getUserService = async (data: any) => {
 
 export const createUserService = async (data: any) => {
   try {
-    const serial_id = "CONVO-002";
+    const serialId = await generateConversationSerialNumber();
+    console.log(serialId);
     // console.log("data in createUserService: ", data);
     data.body.email_id = data.body?.email;
     let user = await createUserRepository(data);
-    data.body.serial_id = serial_id;
+    data.body.serial_id = serialId;
     data.body.userId = user.id;
 
     // create new conversation for new user
