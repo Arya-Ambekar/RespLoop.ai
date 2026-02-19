@@ -16,6 +16,8 @@ import ConversationDetailView from "./components/ConversationDetailView/Conversa
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import SocketClient from "./socketClient.ts";
+import ImproveAgentView from "./components/ImproveAgentView/ImproveAgentView.tsx";
+import ImproveAgentModal from "./components/ImproveAgentModal/ImproveAgentModal.tsx";
 
 export const socketClient = new SocketClient();
 
@@ -29,6 +31,8 @@ const router = createBrowserRouter(
         <Route path="conversations/:id" element={<ConversationDetailView />} />
         <Route path="tickets" element={<TicketsView />} />
         <Route path="tickets/:id" element={<ConversationDetailView />} />
+        <Route path="improveagent" element={<ImproveAgentView />} />
+        {/* <Route path="improveagent/:id" element={<ImproveAgentModal />} /> */}
       </Route>
     </>,
   ),

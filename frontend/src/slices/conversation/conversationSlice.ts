@@ -74,20 +74,11 @@ export const conversationSlice = createSlice({
         action.payload === "All Statuses" ? undefined : action.payload;
     },
     saveReceivedMessages: (state, action) => {
-      console.log(
-        "state.currentConversation before adding new msg: ",
-        state.currentConversation,
-      );
-      console.log("action.payload: ", action.payload);
       state.currentConversation?.Messages.push(action.payload.userMessage);
       state.currentConversation?.Messages.push(action.payload.botMessage);
       if (state.currentConversation) {
         state.currentConversation.last_messaged_at = action.payload.msgDateTime;
       }
-      console.log(
-        "state.currentConversation.last_messaged_at: ",
-        state.currentConversation?.last_messaged_at,
-      );
     },
   },
   extraReducers: (builder) => {
@@ -101,17 +92,8 @@ export const conversationSlice = createSlice({
         state.pagination = action.payload?.pagination;
       })
       .addCase(fetchConversation.fulfilled, (state, action) => {
-        console.log("fetchConversation is called");
         state.status = "succeeded";
         state.currentConversation = action.payload;
-        console.log(
-          "action.payload.data in fetchConversation: ",
-          action.payload,
-        );
-        console.log(
-          " state.currentConversation in fetchConversation: ",
-          state.currentConversation,
-        );
       });
     // .addCase(fetchMessages.pending, (state) => {
     //   state.status = "loading";

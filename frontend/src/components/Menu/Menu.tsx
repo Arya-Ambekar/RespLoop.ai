@@ -82,6 +82,41 @@ const Menu = () => {
           Tickets
         </p>
       </NavLink>
+      <NavLink
+        to={"/admin/improveagent"}
+        className={({ isActive }) =>
+          isActive ? "selected-menu-option" : "menu-option"
+        }
+        style={{ textDecoration: "none", color: "black" }}
+        onClick={() => {
+          dispatch(setActiveMenu(views.IMPROVEAGENT));
+        }}
+      >
+        <div
+          className={
+            activeView === views.IMPROVEAGENT
+              ? "selected-menu-option-icon-wrapper"
+              : "menu-option-icon-wrapper"
+          }
+        >
+          <Tag
+            className={
+              activeView === views.IMPROVEAGENT
+                ? "selected-menu-option-icon"
+                : "menu-option-icon"
+            }
+          />
+        </div>
+        <p
+          className={
+            activeView === views.IMPROVEAGENT
+              ? "selected-menu-option-name"
+              : "menu-option-name"
+          }
+        >
+          Improve Agent
+        </p>
+      </NavLink>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import ticketReducer from "../slices/ticket/ticketSlice";
 import menuReducer from "../slices/menu/menuSlice";
 import userReducer from "../slices/user/userSlice";
 import socketReducer from "../slices/socket/socketSlice";
+import improveAgentReducer from "../slices/improveAgent/improveAgentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     menu: menuReducer,
     user: userReducer,
     socket: socketReducer,
+    improveAgent: improveAgentReducer,
   },
 });
 
