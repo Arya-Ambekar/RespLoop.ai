@@ -31,7 +31,7 @@ const SearchBar = ({
     onSearch("");
   };
 
-  console.log(value);
+  // console.log(value);
   return (
     <div className="search-bar">
       <div className="search-wrapper">

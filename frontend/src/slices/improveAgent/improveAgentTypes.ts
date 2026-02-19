@@ -14,4 +14,7 @@ export interface ImproveAgentState {
     improve_agent_statuses?: string;
   };
   currentImproveAgent: ImproveAgentData | null;
+  searchQueries: {
+    conversation_serial_id?: string;
+  };
 }
