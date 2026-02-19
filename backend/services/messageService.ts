@@ -1,4 +1,8 @@
 import {
+  getResolutionStatus,
+  updateResolutionStatus,
+} from "../repositories/conversationRepository.ts";
+import {
   getMessagesRepository,
   getMessageRepository,
   createMessageRepository,
@@ -31,6 +35,7 @@ export const getMessageService = async (data: any) => {
     const { id } = data.params;
 
     let message = await getMessageRepository({ id });
+    console.log(message);
     return message;
   } catch (error) {
     throw error;
@@ -117,6 +122,12 @@ export const createMessageService = async (data: any) => {
     //   }
     // }
 
+    addResolutionStatus({
+      conversationId: conversationId,
+      text: text,
+      msgId: userMessage.id,
+    });
+
     let botResponse = await generateBotResponse(
       data.body.text,
       data.body.conversationId,
@@ -157,6 +168,95 @@ export const deleteMessageService = async (data: any) => {
   try {
     let message = await deleteMessageRepository(data);
     return message;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// export const addResolutionStatus = async (data: any) => {
+//   try {
+//     const { conversationId, text, msgId } = data;
+//     const currentResolutionStatus = await getResolutionStatus({
+//       conversationId: conversationId,
+//     });
+//     console.log("currentResolutionStatus: ", currentResolutionStatus);
+//     if (!data.query) {
+//       data.query = {};
+//     }
+//     data.query.conversationId = conversationId;
+//     const allMessages = await getMessagesRepository(data);
+//     let addedResolutionStatus;
+
+//     if (allMessages?.rows?.length) {
+//       for (let message of allMessages.rows) {
+//         if (
+//           message.text === text &&
+//           message.sender === "user" &&
+//           message.id !== msgId
+//         ) {
+//           addedResolutionStatus = await updateResolutionStatus({
+//             conversationId: conversationId,
+//             resolution_status: "partially resolved",
+//           });
+//           break;
+//         } else if (
+//           addedResolutionStatus === null &&
+//           currentResolutionStatus?.resolution_status !== "partially resolved" &&
+//           currentResolutionStatus?.resolution_status !== "unresolved"
+//         ) {
+//           addedResolutionStatus = await updateResolutionStatus({
+//             conversationId: conversationId,
+//             resolution_status: "resolved",
+//           });
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+export const addResolutionStatus = async (data: any) => {
+  try {
+    const { conversationId, text, msgId } = data;
+
+    const currentConversation = await getResolutionStatus({
+      conversationId,
+    });
+
+    const currentStatus = currentConversation?.resolution_status;
+
+    data.query ??= {};
+    data.query.conversationId = conversationId;
+
+    const allMessages = await getMessagesRepository(data);
+
+    if (!allMessages?.rows?.length) return;
+
+    // 🔎 Check for repeat question (excluding current message)
+    const isDuplicate = allMessages.rows.some(
+      (message) =>
+        message.text === text &&
+        message.sender === "user" &&
+        message.id !== msgId,
+    );
+
+    let newStatus: string | null = null;
+
+    if (isDuplicate) {
+      if (currentStatus !== "unresolved") {
+        newStatus = "partially resolved";
+      }
+    } else if (!currentStatus || currentStatus === "resolved") {
+      newStatus = "resolved";
+    }
+
+    if (newStatus) {
+      await updateResolutionStatus({
+        conversationId,
+        resolution_status: newStatus,
+      });
+    }
   } catch (error) {
     throw error;
   }

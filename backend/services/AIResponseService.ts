@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import type { ChatCompletionTool } from "openai/resources/chat";
 import { createTicketService } from "../services/ticketService.ts";
+import { updateResolutionStatus } from "../repositories/conversationRepository.ts";
 
 const token = process.env.LLM_TOKEN!;
 const endpoint = process.env.LLM_ENDPOINT!;
@@ -152,6 +153,11 @@ export const generateBotResponse = async (
           reason: args.reason,
           status: "open", // enforce server-side
           conversationId: conversationId,
+        });
+
+        await updateResolutionStatus({
+          conversationId: conversationId,
+          resolution_status: "unresolved",
         });
 
         return {

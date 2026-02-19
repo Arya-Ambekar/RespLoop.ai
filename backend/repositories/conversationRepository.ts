@@ -108,3 +108,30 @@ export const deleteConversationRepository = async (data: any) => {
     throw error;
   }
 };
+
+export const updateResolutionStatus = async (data: any) => {
+  try {
+    const { conversationId } = data;
+    const conversation = await Conversation.update(data, {
+      where: { id: conversationId },
+      returning: true,
+    });
+
+    return conversation;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getResolutionStatus = async (data: any) => {
+  try {
+    const { conversationId } = data;
+    const conversation = await Conversation.findOne({
+      where: { id: conversationId },
+      attributes: ["id", "resolution_status"],
+    });
+    return conversation;
+  } catch (error) {
+    throw error;
+  }
+};
