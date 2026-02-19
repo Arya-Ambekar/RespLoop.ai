@@ -173,49 +173,6 @@ export const deleteMessageService = async (data: any) => {
   }
 };
 
-// export const addResolutionStatus = async (data: any) => {
-//   try {
-//     const { conversationId, text, msgId } = data;
-//     const currentResolutionStatus = await getResolutionStatus({
-//       conversationId: conversationId,
-//     });
-//     console.log("currentResolutionStatus: ", currentResolutionStatus);
-//     if (!data.query) {
-//       data.query = {};
-//     }
-//     data.query.conversationId = conversationId;
-//     const allMessages = await getMessagesRepository(data);
-//     let addedResolutionStatus;
-
-//     if (allMessages?.rows?.length) {
-//       for (let message of allMessages.rows) {
-//         if (
-//           message.text === text &&
-//           message.sender === "user" &&
-//           message.id !== msgId
-//         ) {
-//           addedResolutionStatus = await updateResolutionStatus({
-//             conversationId: conversationId,
-//             resolution_status: "partially resolved",
-//           });
-//           break;
-//         } else if (
-//           addedResolutionStatus === null &&
-//           currentResolutionStatus?.resolution_status !== "partially resolved" &&
-//           currentResolutionStatus?.resolution_status !== "unresolved"
-//         ) {
-//           addedResolutionStatus = await updateResolutionStatus({
-//             conversationId: conversationId,
-//             resolution_status: "resolved",
-//           });
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
 export const addResolutionStatus = async (data: any) => {
   try {
     const { conversationId, text, msgId } = data;
@@ -233,7 +190,6 @@ export const addResolutionStatus = async (data: any) => {
 
     if (!allMessages?.rows?.length) return;
 
-    // 🔎 Check for repeat question (excluding current message)
     const isDuplicate = allMessages.rows.some(
       (message) =>
         message.text === text &&

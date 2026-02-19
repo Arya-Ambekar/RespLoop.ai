@@ -1,0 +1,100 @@
+/* EMAIL INPUT */
+.login-input-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%)
+    border-box;
+  min-height: 470px;
+  min-width: 480px;
+  width: 480px;
+  height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 22px;
+  padding: 45px;
+  box-shadow: 0px 0px 10px #b7b7b7e0;
+}
+
+.login-input-title {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.login-input-title p {
+  font-size: 15px;
+}
+
+.login-email-input-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+.login-email-input {
+  outline: transparent;
+  border: none;
+  padding: 15px 15px;
+  width: 400px;
+  border-radius: 25px;
+  background-color: white;
+}
+
+.login-email-input::placeholder {
+  opacity: 0.6;
+}
+
+.login-button {
+  border-radius: 25px;
+  border: transparent;
+  padding: 15px 15px;
+  font-size: 14px;
+  background-color: white;
+}
+
+.login-button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.918);
+}
+
+/* PASSWORD INPUT */
+.login-password-input {
+  outline: transparent;
+  border: none;
+  padding: 15px 15px;
+  border-radius: 25px;
+  background-color: white;
+}
+
+.login-password-input::placeholder {
+  opacity: 0.6;
+}
+
+.login-input-box-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-error-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+}

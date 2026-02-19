@@ -17,7 +17,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import SocketClient from "./socketClient.ts";
 import ImproveAgentView from "./components/ImproveAgentView/ImproveAgentView.tsx";
-import ImproveAgentModal from "./components/ImproveAgentModal/ImproveAgentModal.tsx";
+import LoginPage from "./pages/Login/LoginPage.tsx";
 
 export const socketClient = new SocketClient();
 
@@ -26,13 +26,13 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<ChatBotPage />}></Route>,
+      <Route path="/login" element={<LoginPage />}></Route>
       <Route path="admin" element={<AdminPanelPage />}>
         <Route path="conversations" element={<ConversationsView />} />
         <Route path="conversations/:id" element={<ConversationDetailView />} />
         <Route path="tickets" element={<TicketsView />} />
         <Route path="tickets/:id" element={<ConversationDetailView />} />
         <Route path="improveagent" element={<ImproveAgentView />} />
-        {/* <Route path="improveagent/:id" element={<ImproveAgentModal />} /> */}
       </Route>
     </>,
   ),

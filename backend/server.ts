@@ -11,6 +11,7 @@ import messageRoutes from "./routes/messageRoutes.ts";
 import userRoutes from "./routes/userRoutes.ts";
 import conversationRoutes from "./routes/conversationRoutes.ts";
 import ticketRoutes from "./routes/ticketRoutes.ts";
+import loginRoutes from "./routes/loginRoute.ts";
 import { createMessageService } from "./services/messageService.ts";
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use("/api/v1", messageRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", conversationRoutes);
 app.use("/api/v1", ticketRoutes);
+app.use("/api/v1", loginRoutes);
 
 // start server and connect database
 (async () => {

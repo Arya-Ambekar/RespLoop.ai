@@ -5,6 +5,7 @@ import ticketReducer from "../slices/ticket/ticketSlice";
 import menuReducer from "../slices/menu/menuSlice";
 import userReducer from "../slices/user/userSlice";
 import socketReducer from "../slices/socket/socketSlice";
+import loginReducer from "../slices/login/loginSlice";
 import improveAgentReducer from "../slices/improveAgent/improveAgentSlice";
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
     user: userReducer,
     socket: socketReducer,
     improveAgent: improveAgentReducer,
+    login: loginReducer,
   },
 });
 
