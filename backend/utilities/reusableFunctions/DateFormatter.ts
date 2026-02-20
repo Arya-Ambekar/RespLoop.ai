@@ -1,4 +1,4 @@
-export function formatDateTime(date: Date) {
+export const formatDateTime = async (date: Date) => {
   const months = [
     "Jan",
     "Feb",
@@ -21,4 +21,4 @@ export function formatDateTime(date: Date) {
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
   return `${day} ${month} ${year}, ${hours}:${minutes}`;
-}
+};
