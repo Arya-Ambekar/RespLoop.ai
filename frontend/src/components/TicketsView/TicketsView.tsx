@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
 import {
   fetchTickets,
   filteredTickets,
-  setStatusesFilter,
+  // setStatusesFilter,
   ticketSelector,
 } from "../../slices/ticket/ticketSlice.ts";
 import { MessageSquareOff } from "lucide-react";
@@ -38,7 +38,8 @@ const TicketsView = () => {
         onSelect={(value: string) => {
           console.log("filter clicked");
           setSelectedTicketStatus(value);
-          dispatch(setStatusesFilter(value));
+          // dispatch(setStatusesFilter(value));
+          dispatch(fetchTickets({ status: value }));
         }}
       />
       <div className="tickets-content-table-wrapper">

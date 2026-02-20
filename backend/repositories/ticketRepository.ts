@@ -7,14 +7,31 @@ export const getTicketsRepository = async (data: any) => {
     const page = Number(data.query?.page) || 1;
     const limit = Number(data.query?.limit) || 10;
     const offset = (page - 1) * limit;
+
+    // search term
     const search = data.query.search;
     const searchTerm =
       typeof search === "string" && search.trim().length > 0
         ? search.trim()
         : null;
 
+    // filter by status
+    const status = data.query.status;
+    const statusFilter =
+      typeof status === "string" &&
+      status.trim().toLowerCase() !== "all statuses"
+        ? status.trim().toLowerCase()
+        : null;
+    console.log(statusFilter);
+
     const tickets = await Ticket.findAndCountAll({
       attributes: ["id", "reason", "status", "conversationId"],
+      where: {
+        ...(statusFilter &&
+          statusFilter !== "all filters" && {
+            status: { [Op.eq]: statusFilter },
+          }),
+      },
       include: [
         {
           model: Conversation,

@@ -8,7 +8,7 @@ import {
   conversationSelector,
   fetchConversations,
   filteredConversations,
-  setResolutionStatusesFilter,
+  // setResolutionStatusesFilter,
 } from "../../slices/conversation/conversationSlice.ts";
 import { MessageSquareOff } from "lucide-react";
 
@@ -35,7 +35,8 @@ const ConversationsView = () => {
         onSelect={(value: string) => {
           console.log("filter clicked");
           setSelectedResolutionStatus(value);
-          dispatch(setResolutionStatusesFilter(value));
+          // dispatch(setResolutionStatusesFilter(value));
+          dispatch(fetchConversations({ resolution_status: value }));
         }}
       />
       <div className="conversations-content-table-wrapper">

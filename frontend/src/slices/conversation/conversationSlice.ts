@@ -16,13 +16,15 @@ export const fetchConversations = createAsyncThunk(
     page = 1,
     limit = 10,
     search,
+    resolution_status,
   }: {
     page?: number;
     limit?: number;
     search?: string;
+    resolution_status?: string;
   }) => {
     const response = await axios.get(`${BASE_URL}/api/v1/conversations`, {
-      params: { page, limit, search },
+      params: { page, limit, search, resolution_status },
     });
     return response.data.data;
   },

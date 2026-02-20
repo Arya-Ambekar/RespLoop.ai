@@ -14,13 +14,15 @@ export const fetchTickets = createAsyncThunk(
     page = 1,
     limit = 10,
     search,
+    status,
   }: {
     page?: number;
     limit?: number;
     search?: string;
+    status?: string;
   }) => {
     const response = await axios.get(`${BASE_URL}/api/v1/tickets`, {
-      params: { page, limit, search },
+      params: { page, limit, search, status },
     });
     return response.data.data;
   },

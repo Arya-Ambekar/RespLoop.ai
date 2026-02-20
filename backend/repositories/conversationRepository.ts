@@ -8,11 +8,22 @@ export const getConversationsRepository = async (data: any) => {
     const page = Number(data.query?.page) || 1;
     const limit = Number(data.query?.limit) || 10;
     const offset = (page - 1) * limit;
+
+    // search term
     const search = data.query.search;
     const searchTerm =
       typeof search === "string" && search.trim().length > 0
         ? search.trim()
         : null;
+
+    // Filter by resolution status
+    const resolutionStatus = data.query.resolution_status;
+    const resolutionStatusFilter =
+      typeof resolutionStatus === "string" &&
+      resolutionStatus.trim().toLowerCase() !== "all statuses"
+        ? resolutionStatus.trim().toLowerCase()
+        : null;
+    console.log(resolutionStatusFilter);
 
     let conversations = await Conversation.findAndCountAll({
       attributes: [
@@ -23,6 +34,11 @@ export const getConversationsRepository = async (data: any) => {
         "userId",
         "createdAt",
       ],
+      where: {
+        ...(resolutionStatusFilter && {
+          resolution_status: { [Op.eq]: resolutionStatusFilter },
+        }),
+      },
       include: [
         {
           model: User,
