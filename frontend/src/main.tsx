@@ -21,7 +21,7 @@ import LoginPage from "./pages/Login/LoginPage.tsx";
 
 export const socketClient = new SocketClient();
 
-console.log("socketClient: ", socketClient);
+// console.log("socketClient: ", socketClient);
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>

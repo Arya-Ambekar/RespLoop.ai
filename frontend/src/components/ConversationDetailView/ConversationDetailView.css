@@ -80,8 +80,6 @@
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
-  scroll-snap-type: y mandatory;
-  scroll-padding: 20px;
   /* border: 1px solid #2e9cfb; */
 }
 
@@ -93,6 +91,14 @@
   width: fit-content;
   font-size: 14px;
   padding: 8px 20px;
+}
+
+.details-view-message-bubble:first-child {
+  margin-top: 15px;
+}
+
+.details-view-message-bubble:last-child {
+  margin-bottom: 15px;
 }
 
 .details-view-ai-message-bubble {

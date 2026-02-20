@@ -54,6 +54,7 @@
   width: 400px;
   border-radius: 25px;
   background-color: white;
+  padding-left: 30px;
 }
 
 .login-email-input::placeholder {
@@ -80,6 +81,7 @@
   padding: 15px 15px;
   border-radius: 25px;
   background-color: white;
+  padding-left: 30px;
 }
 
 .login-password-input::placeholder {

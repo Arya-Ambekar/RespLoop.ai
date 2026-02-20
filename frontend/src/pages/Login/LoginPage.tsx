@@ -3,6 +3,8 @@ import "./LoginPage.css";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { login, loginSelector } from "../../slices/login/loginSlice";
 import { useNavigate } from "react-router-dom";
+import { setActiveMenu } from "../../slices/menu/menuSlice";
+import { views } from "../../slices/menu/menuTypes";
 
 const LoginPage = () => {
   const [emailId, setEmailId] = useState("");
@@ -17,6 +19,7 @@ const LoginPage = () => {
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/admin/conversations");
+      dispatch(setActiveMenu(views.CONVERSATIONS));
     }
   }, [isLoggedIn, navigate]);
 

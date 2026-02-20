@@ -16,7 +16,7 @@ import { addUser, userSelector } from "../../slices/user/userSlice";
 import ReactMarkdown from "react-markdown";
 
 const ChatSpace = () => {
-  const currentMessage = useRef<HTMLDivElement | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [inputText, setInputText] = useState("");
   const [email, setEmail] = useState("");
   // const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
@@ -30,13 +30,12 @@ const ChatSpace = () => {
   //   setInputText((prev) => prev + e.emoji);
   // };
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
-    if (currentMessage.current) {
-      currentMessage.current.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-      });
-    }
+    scrollToBottom();
   }, [dispatch, currentConversation]);
 
   useEffect(() => {
@@ -100,7 +99,7 @@ const ChatSpace = () => {
       {currentConversationId && (
         <>
           <div className="ChatSpace-header">
-            <div className="message-container" ref={currentMessage}>
+            <div className="message-container">
               <p className="current-time">
                 {currentConversation?.last_messaged_at}
               </p>
@@ -121,6 +120,7 @@ const ChatSpace = () => {
                     </div>
                   </div>
                 ))}
+              <div ref={messagesEndRef} />
             </div>
             <div className="message-input-container">
               <input
