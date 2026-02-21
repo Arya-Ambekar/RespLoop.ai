@@ -1,40 +1,36 @@
 .ChatBox-wrapper {
   display: flex;
   flex-direction: column;
-  margin: 5px;
+  height: 100%;
 }
 
 .chat-space {
-  height: 470px;
-  width: 100%;
-  border-radius: 22px;
+  flex: 1;
+  min-height: 0;
+  border-radius: 17px;
   background-color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-
-/* Responsiveness */
 
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .ChatBox-wrapper {
-    margin: 6px;
-  }
   .chat-space {
-    height: 562px;
-    border-radius: 22px;
+    border-radius: 19px;
   }
 }
 
 /* Laptop */
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .chat-space {
+    border-radius: 19px;
+  }
 }
 
 /* Desktop */
 @media screen and (min-width: 1440px) {
-  .ChatBox-wrapper {
-    margin: 6px;
-  }
   .chat-space {
-    height: 568px;
-    border-radius: 22px;
+    border-radius: 19px;
   }
 }

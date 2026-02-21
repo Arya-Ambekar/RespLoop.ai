@@ -1,6 +1,7 @@
 .ChatSpace-header {
   display: flex;
   flex-direction: column;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -8,18 +9,24 @@
   font-size: 11px;
   color: #7f7a7a;
   align-self: center;
-  padding: 9px;
+  padding: 8px;
+  flex-shrink: 0;
 }
+
 .message-container {
-  padding: 15px;
-  min-height: 400px;
-  height: 400px;
+  flex: 1;
+  min-height: 0;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
+}
+
+.message-container::-webkit-scrollbar {
+  display: none;
 }
 
 .ai-message-bubble {
@@ -28,12 +35,14 @@
   padding: 7px 12px;
   background-color: #f3f3f3;
   border-radius: 13px 13px 13px 0px;
-  max-width: 340px;
+  max-width: 78%;
   width: fit-content;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
 .ai-message-bubble div {
-  margin: 0px 0px 0px 10px;
+  margin: 0;
 }
 
 .user-message-bubble {
@@ -43,102 +52,54 @@
   padding: 7px 12px;
   background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%);
   border-radius: 13px 13px 0px 13px;
-  max-width: 340px;
+  max-width: 78%;
   width: fit-content;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
 .message-input-container {
-  height: 70px;
+  flex-shrink: 0;
+  height: 60px;
   border-top: 1px solid #d6d6d6;
-  padding: 15px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
+  gap: 10px;
+  background-color: white;
+  border-radius: 0 0 22px 22px;
 }
 
 .message-input {
   background-color: transparent;
   border: none;
   outline: 0;
-  width: 245px;
+  flex: 1;
+  font-size: 12px;
+  min-width: 0;
+}
+
+.message-input::placeholder {
+  opacity: 0.5;
 }
 
 .message-input-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+  flex-shrink: 0;
 }
-
-/* .emoji-picker-containter {
-  display: flex;
-  align-items: center;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.emoji-picker {
-  position: absolute;
-  bottom: 65px;
-  right: 0px;
-  width: min(90vw, 320px);
-  height: min(45vh, 380px);
-}
-
-.emoji-picker .EmojiPickerReact {
-  width: 100% !important;
-  height: 100% !important;
-  display: flex !important;
-  flex-direction: column !important;
-} */
-
-/* Search bar */
-/* .EmojiPickerReact .epr-search-container {
-  padding: 4px 7px !important;
-}
-
-.EmojiPickerReact .epr-search-container input {
-  height: 30px;
-  font-size: 11px;
-} */
-
-/* Category icons row */
-/* .EmojiPickerReact .epr-category-nav {
-  flex-wrap: nowrap !important;
-  overflow-x: auto;
-  padding: 1px 2px !important;
-}
-
-.EmojiPickerReact .epr-category-nav img {
-  width: 10px;
-  height: 10px;
-} */
-
-/* Emoji grid must grow properly */
-/* .EmojiPickerReact .epr-body {
-  flex: 1 !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
-}
-
-.EmojiPickerReact .epr-emoji {
-  padding: 4px !important;
-}
-
-.EmojiPickerReact .epr-emoji-img {
-  width: clamp(10px, 2vw, 14px) !important;
-  height: clamp(10px, 2vw, 14px) !important;
-} */
 
 .send-button {
   border-radius: 50px;
-  padding: 10px;
+  padding: 8px;
   background-color: #48acf9;
   color: white;
   border: transparent;
   display: flex;
   align-items: center;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .send-button:active {
@@ -146,33 +107,9 @@
 }
 
 .send-button-icon {
-  height: 18px;
-  width: 18px;
+  height: 15px;
+  width: 15px;
 }
-
-/* .emoji-button-icon {
-  height: 18px;
-  width: 18px;
-}
-
-.emoji-button-icon:active {
-  color: #5c5b5b;
-} */
-
-/* .document-button {
-  background: transparent;
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.document-button-icon {
-  height: 18px;
-  width: 18px;
-}
-
-.document-button-icon:active {
-  color: #5c5b5b;
-} */
 
 /* EMAIL INPUT */
 .email-input-wrapper {
@@ -182,6 +119,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .email-input-container {
@@ -189,14 +128,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 35px;
+  gap: 28px;
   background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%)
     border-box;
-  width: 300px;
-  height: 250px;
+  width: 100%;
+  max-width: 290px;
   border-radius: 22px;
-  padding: 20px;
+  padding: 25px 20px;
   box-shadow: 0px 0px 10px #b7b7b7e0;
+  box-sizing: border-box;
 }
 
 .email-input-title {
@@ -205,27 +145,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  text-align: center;
+}
+
+.email-input-title h3 {
+  font-size: 15px;
+  margin: 0;
 }
 
 .email-input-title p {
   font-size: 11px;
+  margin: 0;
+  opacity: 0.9;
 }
 
 .email-input-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 15px;
+  gap: 12px;
+  width: 100%;
 }
 
 .email-input {
   outline: transparent;
   border: none;
-  padding: 10px 15px;
-  width: 260px;
+  padding: 9px 14px;
+  width: 100%;
   border-radius: 20px;
   background-color: white;
+  box-sizing: border-box;
+  font-size: 12px;
 }
 
 .email-input::placeholder {
@@ -235,164 +186,144 @@
 .email-input-div button {
   border-radius: 20px;
   border: transparent;
-  padding: 10px 15px;
-  font-size: 14px;
+  padding: 9px 14px;
+  font-size: 12px;
   background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .email-input-div button:hover {
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.918);
+  background-color: rgba(255, 255, 255, 0.9);
 }
-
-/* Responsiveness */
 
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .message-container {
-    padding: 18px;
-    min-height: 480px;
-    height: 480px;
-    gap: 15px;
-  }
-
-  .ai-message-bubble {
-    font-size: 13px;
-    padding: 9px 14px;
-    max-width: 380px;
-  }
-
+  .ai-message-bubble,
   .user-message-bubble {
-    font-size: 13px;
-    padding: 9px 14px;
-    max-width: 380px;
-  }
-
-  .message-input-container {
-    height: 70px;
-    padding: 18px;
+    font-size: 12px;
+    padding: 8px 12px;
   }
 
   .message-input {
-    width: 360px;
-  }
-
-  .send-button {
-    padding: 12px;
-  }
-
-  .send-button-icon {
-    height: 20px;
-    width: 20px;
-  }
-
-  .email-input-container {
-    width: 340px;
-    height: 270px;
-    gap: 35px;
-  }
-
-  .email-input-title h3 {
-    font-size: 17px;
-  }
-
-  .email-input-title p {
     font-size: 13px;
   }
 
-  .email-input {
-    width: 300px;
-    font-size: 14px;
+  .message-input-container {
+    height: 62px;
+    padding: 10px 15px;
   }
 
+  .send-button {
+    padding: 9px;
+  }
+
+  .send-button-icon {
+    height: 16px;
+    width: 16px;
+  }
+
+  .email-input-container {
+    max-width: 300px;
+  }
+
+  .email-input-title h3 {
+    font-size: 16px;
+  }
+
+  .email-input-title p {
+    font-size: 11px;
+  }
+
+  .email-input,
   .email-input-div button {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
+
 /* Laptop */
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
-  .ChatBox-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 0;
+  .ai-message-bubble,
+  .user-message-bubble {
+    font-size: 12px;
+    padding: 8px 12px;
   }
 
-  .chat-space {
-    flex: 1;
-    min-height: 0;
-    border-radius: 22px;
+  .message-input {
+    font-size: 13px;
+  }
+
+  .message-input-container {
+    height: 63px;
+    padding: 10px 15px;
+  }
+
+  .send-button {
+    padding: 9px;
+  }
+
+  .send-button-icon {
+    height: 16px;
+    width: 16px;
+  }
+
+  .email-input-container {
+    max-width: 300px;
+  }
+
+  .email-input-title h3 {
+    font-size: 16px;
+  }
+
+  .email-input,
+  .email-input-div button {
+    font-size: 13px;
   }
 }
 
 /* Desktop */
 @media screen and (min-width: 1440px) {
-  .message-container {
-    padding: 18px;
-    min-height: 483px;
-    height: 483px;
-    gap: 15px;
-  }
-
-  .ai-message-bubble {
-    font-size: 14px;
-    padding: 9px 14px;
-    max-width: 380px;
-  }
-
+  .ai-message-bubble,
   .user-message-bubble {
-    font-size: 14px;
-    padding: 9px 14px;
-    max-width: 380px;
-  }
-
-  .message-input-container {
-    height: 85px;
-    padding: 20px;
+    font-size: 13px;
+    padding: 8px 13px;
   }
 
   .message-input {
-    width: 387px;
-    font-size: 16px;
-  }
-
-  .send-button {
-    padding: 12px;
-  }
-
-  .send-button-icon {
-    height: 25px;
-    width: 25px;
-  }
-
-  .email-input-container {
-    width: 340px;
-    height: 270px;
-    gap: 35px;
-  }
-
-  .email-input-title h3 {
-    font-size: 18px;
-  }
-
-  .email-input-title p {
     font-size: 13px;
   }
 
-  .email-input {
-    width: 300px;
-    font-size: 14px;
-    padding: 13px 15px;
-    border-radius: 23px;
+  .message-input-container {
+    height: 65px;
+    padding: 12px 16px;
   }
 
-  .email-input-div {
-    gap: 16px;
+  .send-button {
+    padding: 10px;
   }
 
-  .email-input-div button {
+  .send-button-icon {
+    height: 17px;
+    width: 17px;
+  }
+
+  .email-input-container {
+    max-width: 310px;
+    gap: 30px;
+    padding: 26px 22px;
+  }
+
+  .email-input-title h3 {
     font-size: 16px;
-    padding: 12px 15px;
-    border-radius: 23px;
+  }
+
+  .email-input-title p {
+    font-size: 12px;
+  }
+
+  .email-input,
+  .email-input-div button {
+    font-size: 13px;
+    padding: 10px 14px;
   }
 }

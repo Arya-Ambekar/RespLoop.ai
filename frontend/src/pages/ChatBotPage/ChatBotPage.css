@@ -8,20 +8,24 @@
 }
 
 .chatbot-button {
-  width: 70px;
-  height: 70px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   background: transparent;
   border: none;
+  padding: 0;
 }
 
 .chatbot-slot {
   border-radius: 22px;
   background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%);
-  height: 550px;
-  width: 430px;
+  height: 500px;
+  width: 340px;
   display: flex;
   flex-direction: column;
+  padding: 5px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .chatbot-button:hover {
@@ -37,48 +41,68 @@
   border-radius: 50%;
 }
 
-/* Responsiveness */
-
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .chatbot-wrapper {
-    height: 100vh;
     padding-right: 15px;
     padding-bottom: 15px;
   }
 
   .chatbot-button {
-    width: 90px;
-    height: 90px;
+    width: 58px;
+    height: 58px;
   }
 
   .chatbot-slot {
-    height: 650px;
-    width: 500px;
+    height: 520px;
+    width: 360px;
     border-radius: 24px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 }
 
 /* Laptop */
-/* @media screen and (min-width: 1024px) and (max-width: 1439px) {
-} */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .chatbot-wrapper {
+    padding-right: 22px;
+    padding-bottom: 22px;
+  }
+
+  .chatbot-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .chatbot-slot {
+    height: 540px;
+    width: 370px;
+    border-radius: 24px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}
 
 /* Desktop */
 @media screen and (min-width: 1440px) {
   .chatbot-wrapper {
-    height: 100vh;
     padding-right: 25px;
-    padding-bottom: 17px;
+    padding-bottom: 20px;
   }
 
   .chatbot-button {
-    width: 100px;
-    height: 100px;
+    width: 62px;
+    height: 62px;
   }
 
   .chatbot-slot {
-    height: 657px;
-    width: 500px;
+    height: 560px;
+    width: 380px;
     border-radius: 24px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 }
