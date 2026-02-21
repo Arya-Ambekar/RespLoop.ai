@@ -1,9 +1,11 @@
 .overlay {
-  position: fixed;
+  /* position: fixed;
   top: 87px;
   bottom: 18.5px;
   left: 209px;
-  right: 20px;
+  right: 20px; */
+  position: absolute;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;

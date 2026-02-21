@@ -4,7 +4,7 @@
   align-items: flex-end;
   height: 100vh;
   padding-right: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 .chatbot-button {
@@ -35,4 +35,50 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+}
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .chatbot-wrapper {
+    height: 100vh;
+    padding-right: 15px;
+    padding-bottom: 15px;
+  }
+
+  .chatbot-button {
+    width: 75px;
+    height: 75px;
+  }
+
+  .chatbot-slot {
+    height: 650px;
+    width: 500px;
+    border-radius: 24px;
+  }
+}
+
+/* Laptop */
+/* @media screen and (min-width: 1024px) and (max-width: 1439px) {
+} */
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .chatbot-wrapper {
+    height: 100vh;
+    padding-right: 25px;
+    padding-bottom: 17px;
+  }
+
+  .chatbot-button {
+    width: 100px;
+    height: 100px;
+  }
+
+  .chatbot-slot {
+    height: 657px;
+    width: 500px;
+    border-radius: 24px;
+  }
 }

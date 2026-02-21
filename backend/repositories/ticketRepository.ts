@@ -17,10 +17,15 @@ export const getTicketsRepository = async (data: any) => {
 
     // filter by status
     const status = data.query.status;
+    console.log(status);
+    console.log(
+      "status?.trim()?.toLowerCase(): ",
+      status?.trim()?.toLowerCase(),
+    );
     const statusFilter =
       typeof status === "string" &&
-      status.trim().toLowerCase() !== "all statuses"
-        ? status.trim().toLowerCase()
+      status?.trim()?.toLowerCase() !== "all statuses"
+        ? status?.trim()?.toLowerCase()
         : null;
     console.log(statusFilter);
 

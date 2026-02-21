@@ -10,3 +10,31 @@
   border-radius: 22px;
   background-color: white;
 }
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .ChatBox-wrapper {
+    margin: 6px;
+  }
+  .chat-space {
+    height: 562px;
+    border-radius: 22px;
+  }
+}
+
+/* Laptop */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .ChatBox-wrapper {
+    margin: 6px;
+  }
+  .chat-space {
+    height: 568px;
+    border-radius: 22px;
+  }
+}

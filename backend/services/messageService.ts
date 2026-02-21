@@ -9,7 +9,7 @@ import {
   updateMessageRepository,
   deleteMessageRepository,
 } from "../repositories/messageRepository.ts";
-import { formatDateTime } from "../utilities/reusableFunctions/DateFormatter.ts";
+import { formatDateTimeAsync } from "../utilities/reusableFunctions/DateFormatter.ts";
 import { generateBotResponse } from "./AIResponseService.ts";
 
 export const getMessagesService = async (data: any) => {
@@ -139,7 +139,7 @@ export const createMessageService = async (data: any) => {
     botMessage = await createMessageRepository(data);
 
     console.log("userMessage: ", userMessage.createdAt);
-    const msgDateTime = await formatDateTime(userMessage.createdAt);
+    const msgDateTime = await formatDateTimeAsync(userMessage.createdAt);
     console.log("msgDateTime: ", msgDateTime);
 
     let response = {

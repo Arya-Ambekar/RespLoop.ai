@@ -1,4 +1,4 @@
-export const formatDateTime = async (date: Date) => {
+export const formatDateTime = (date: Date) => {
   const months = [
     "Jan",
     "Feb",
@@ -21,4 +21,8 @@ export const formatDateTime = async (date: Date) => {
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
   return `${day} ${month} ${year}, ${hours}:${minutes}`;
+};
+
+export const formatDateTimeAsync = async (date: Date) => {
+  return formatDateTime(date);
 };

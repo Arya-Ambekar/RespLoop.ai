@@ -18,12 +18,17 @@ export const getConversationsRepository = async (data: any) => {
 
     // Filter by resolution status
     const resolutionStatus = data.query.resolution_status;
+    console.log(resolutionStatus);
+    console.log(
+      "resolutionStatus.trim().toLowerCase(): ",
+      resolutionStatus?.trim()?.toLowerCase(),
+    );
     const resolutionStatusFilter =
       typeof resolutionStatus === "string" &&
-      resolutionStatus.trim().toLowerCase() !== "all statuses"
-        ? resolutionStatus.trim().toLowerCase()
+      resolutionStatus?.trim()?.toLowerCase() !== "all statuses"
+        ? resolutionStatus?.trim()?.toLowerCase()
         : null;
-    console.log(resolutionStatusFilter);
+    console.log("resolutionStatusFilter: ", resolutionStatusFilter);
 
     let conversations = await Conversation.findAndCountAll({
       attributes: [

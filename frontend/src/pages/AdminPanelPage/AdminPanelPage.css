@@ -27,4 +27,19 @@
   max-height: 590px;
   max-width: 1355px;
   overflow: hidden;
+  position: relative;
+}
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+}
+
+/* Laptop */
+@media screen and (min-width: 1024px) {
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
 }

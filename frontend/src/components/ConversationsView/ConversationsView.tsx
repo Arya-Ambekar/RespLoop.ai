@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks.ts";
 import {
   conversationSelector,
   fetchConversations,
-  filteredConversations,
+  // filteredConversations,
   // setResolutionStatusesFilter,
 } from "../../slices/conversation/conversationSlice.ts";
 import { MessageSquareOff } from "lucide-react";
@@ -20,20 +20,23 @@ const ConversationsView = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { status, pagination } = useAppSelector(conversationSelector);
-  const conversations = useAppSelector(filteredConversations);
-
+  const { status, pagination, conversations } =
+    useAppSelector(conversationSelector);
+  // const conversations = useAppSelector(filteredConversations);
+  console.log("selectedResolutionStatus:", selectedResolutionStatus);
+  console.log("pagination:", pagination);
   useEffect(() => {
     dispatch(fetchConversations({ page }));
   }, [dispatch, page]);
 
+  console.log("conversations in ConversationsView: ", conversations);
   return (
     <div className="conversations-view-wrapper">
       <FilterDropdown
         dropdownList={RESOLUTION_STATUS_FILTER_OPTIONS}
         selectedValue={selectedResolutionStatus}
-        onSelect={(value: string) => {
-          console.log("filter clicked");
+        onSelect={(value: any) => {
+          console.log("filter clicked", value);
           setSelectedResolutionStatus(value);
           // dispatch(setResolutionStatusesFilter(value));
           dispatch(fetchConversations({ resolution_status: value }));

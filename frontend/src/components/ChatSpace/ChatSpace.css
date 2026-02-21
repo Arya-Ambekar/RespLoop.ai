@@ -20,22 +20,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
-  scroll-snap-type: y mandatory;
-  scroll-padding: 20px;
 }
-
-/* .message-space {
-  min-height: 300px;
-  height: 350px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  scroll-snap-type: y mandatory;
-  scroll-padding: 20px;
-} */
 
 .ai-message-bubble {
   font-size: 12px;
@@ -58,6 +43,8 @@
   padding: 7px 12px;
   background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%);
   border-radius: 13px 13px 0px 13px;
+  max-width: 340px;
+  width: fit-content;
 }
 
 .message-input-container {
@@ -163,14 +150,14 @@
   width: 18px;
 }
 
-.emoji-button-icon {
+/* .emoji-button-icon {
   height: 18px;
   width: 18px;
 }
 
 .emoji-button-icon:active {
   color: #5c5b5b;
-}
+} */
 
 /* .document-button {
   background: transparent;
@@ -186,50 +173,6 @@
 .document-button-icon:active {
   color: #5c5b5b;
 } */
-
-/* NEW CHAT OR CONTINUE OLD CHAT */
-
-.decide-new-chat-option {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.chat-buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  padding-left: 10px;
-}
-
-.chat-button {
-  position: relative;
-  background: transparent;
-  padding: 3px 10px 5px 10px;
-  border: none;
-  width: fit-content;
-  font-weight: bold;
-  background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%);
-  background-clip: text;
-  color: transparent;
-  cursor: pointer;
-}
-
-.chat-button::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: 22px;
-  background-color: white;
-  border: 2px solid transparent;
-  background: linear-gradient(92deg, #2e9cfb 0%, #68aadd 52%, #2e9cfb 100%)
-    border-box;
-  mask:
-    linear-gradient(#000 0 0) padding-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-}
 
 /* EMAIL INPUT */
 .email-input-wrapper {
@@ -300,4 +243,144 @@
 .email-input-div button:hover {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.918);
+}
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .message-container {
+    padding: 18px;
+    min-height: 480px;
+    height: 480px;
+    gap: 15px;
+  }
+
+  .ai-message-bubble {
+    font-size: 13px;
+    padding: 9px 14px;
+    max-width: 380px;
+  }
+
+  .user-message-bubble {
+    font-size: 13px;
+    padding: 9px 14px;
+    max-width: 380px;
+  }
+
+  .message-input-container {
+    height: 70px;
+    padding: 18px;
+  }
+
+  .message-input {
+    width: 360px;
+  }
+
+  .send-button {
+    padding: 12px;
+  }
+
+  .send-button-icon {
+    height: 20px;
+    width: 20px;
+  }
+
+  .email-input-container {
+    width: 340px;
+    height: 270px;
+    gap: 35px;
+  }
+
+  .email-input-title h3 {
+    font-size: 17px;
+  }
+
+  .email-input-title p {
+    font-size: 13px;
+  }
+
+  .email-input {
+    width: 300px;
+    font-size: 14px;
+  }
+
+  .email-input-div button {
+    font-size: 14px;
+  }
+}
+/* Laptop */
+/* @media screen and (min-width: 1024px) and (max-width: 1439px) {
+} */
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .message-container {
+    padding: 18px;
+    min-height: 483px;
+    height: 483px;
+    gap: 15px;
+  }
+
+  .ai-message-bubble {
+    font-size: 14px;
+    padding: 9px 14px;
+    max-width: 380px;
+  }
+
+  .user-message-bubble {
+    font-size: 14px;
+    padding: 9px 14px;
+    max-width: 380px;
+  }
+
+  .message-input-container {
+    height: 85px;
+    padding: 20px;
+  }
+
+  .message-input {
+    width: 387px;
+    font-size: 16px;
+  }
+
+  .send-button {
+    padding: 12px;
+  }
+
+  .send-button-icon {
+    height: 25px;
+    width: 25px;
+  }
+
+  .email-input-container {
+    width: 340px;
+    height: 270px;
+    gap: 35px;
+  }
+
+  .email-input-title h3 {
+    font-size: 18px;
+  }
+
+  .email-input-title p {
+    font-size: 13px;
+  }
+
+  .email-input {
+    width: 300px;
+    font-size: 14px;
+    padding: 13px 15px;
+    border-radius: 23px;
+  }
+
+  .email-input-div {
+    gap: 16px;
+  }
+
+  .email-input-div button {
+    font-size: 16px;
+    padding: 12px 15px;
+    border-radius: 23px;
+  }
 }
