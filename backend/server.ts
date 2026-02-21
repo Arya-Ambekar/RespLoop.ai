@@ -13,11 +13,13 @@ import conversationRoutes from "./routes/conversationRoutes.ts";
 import ticketRoutes from "./routes/ticketRoutes.ts";
 import loginRoutes from "./routes/loginRoute.ts";
 import { createMessageService } from "./services/messageService.ts";
+import path from "path";
 
 dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT;
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cors());
@@ -30,6 +32,15 @@ app.use("/api/v1", userRoutes);
 app.use("/api/v1", conversationRoutes);
 app.use("/api/v1", ticketRoutes);
 app.use("/api/v1", loginRoutes);
+
+// Production deployment settings
+if (process.env.NODE_ENV === "production") {
+  // server our react app
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.get(/(.*)/, (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
 
 // start server and connect database
 (async () => {
