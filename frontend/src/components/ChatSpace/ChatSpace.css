@@ -310,8 +310,20 @@
   }
 }
 /* Laptop */
-/* @media screen and (min-width: 1024px) and (max-width: 1439px) {
-} */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .ChatBox-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .chat-space {
+    flex: 1;
+    min-height: 0;
+    border-radius: 22px;
+  }
+}
 
 /* Desktop */
 @media screen and (min-width: 1440px) {

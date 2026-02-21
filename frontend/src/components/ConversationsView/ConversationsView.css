@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
+  width: 100%;
 }
 
 /* TABLE */
@@ -11,10 +13,13 @@
   border: 1px solid #c9c9c9;
   border-radius: 20px;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .conversations-content-table-wrapper table {
   width: 100%;
+  background-color: white;
 }
 
 .conversations-view-table {
@@ -142,4 +147,187 @@
   justify-content: center;
   background-color: white;
   color: #858585;
+}
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .conversations-view-wrapper {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 18px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .conversations-content-table-wrapper {
+    border-radius: 18px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .conversations-view-table thead th,
+  .conversations-view-table thead td {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .conversations-view-table tbody th,
+  .conversations-view-table tbody td {
+    padding: 14px 24px;
+    font-size: 13px;
+  }
+
+  .conversations-view-table th:nth-child(1),
+  .conversations-view-table td:nth-child(1) {
+    width: 140px;
+  }
+
+  .conversations-view-table th:nth-child(2),
+  .conversations-view-table td:nth-child(2) {
+    width: auto;
+  }
+
+  .conversations-view-table th:nth-child(3),
+  .conversations-view-table td:nth-child(3) {
+    width: 150px;
+  }
+
+  .conversations-view-table th:nth-child(4),
+  .conversations-view-table td:nth-child(4) {
+    width: 160px;
+  }
+
+  .empty-conversations-table {
+    height: 100%;
+    min-height: unset;
+  }
+
+  .loading-conversations {
+    height: 100%;
+    min-height: unset;
+  }
+}
+/* 
+@media screen and (min-width: 960px) and (max-width: 1023px) {
+  .conversations-view-table thead th,
+  .conversations-view-table thead td {
+    padding: 26px 41px;
+    font-size: 17px;
+  }
+
+  .conversations-view-table tbody th,
+  .conversations-view-table tbody td {
+    padding: 13px 40px;
+    font-size: 15px;
+    border-bottom: 1px solid #cdcdcd;
+  }
+} */
+
+/* Laptop */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .conversations-view-wrapper {
+    padding: 16px;
+    gap: 16px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .conversations-content-table-wrapper {
+    border-radius: 16px;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .conversations-view-table thead th,
+  .conversations-view-table thead td {
+    padding: 16px 30px;
+    font-size: 14px;
+  }
+
+  .conversations-view-table tbody th,
+  .conversations-view-table tbody td {
+    padding: 12.8px 30px;
+    font-size: 12px;
+  }
+
+  .conversations-view-table th:nth-child(1),
+  .conversations-view-table td:nth-child(1) {
+    width: 160px;
+  }
+
+  .conversations-view-table th:nth-child(2),
+  .conversations-view-table td:nth-child(2) {
+    width: auto;
+  }
+
+  .conversations-view-table th:nth-child(3),
+  .conversations-view-table td:nth-child(3) {
+    width: 180px;
+  }
+
+  .conversations-view-table th:nth-child(4),
+  .conversations-view-table td:nth-child(4) {
+    width: 170px;
+  }
+  .empty-conversations-table {
+    height: 100%;
+    min-height: unset;
+  }
+  .loading-conversations {
+    height: 100%;
+    min-height: unset;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .conversations-view-wrapper {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .conversations-view-table thead th,
+  .conversations-view-table thead td {
+    padding: 19px 38px;
+    font-size: 15px;
+  }
+
+  .conversations-view-table tbody th,
+  .conversations-view-table tbody td {
+    padding: 11.1px 38px;
+    font-size: 13px;
+  }
+
+  .conversations-view-table th:nth-child(1),
+  .conversations-view-table td:nth-child(1) {
+    width: 180px;
+  }
+
+  .conversations-view-table th:nth-child(2),
+  .conversations-view-table td:nth-child(2) {
+    width: auto;
+  }
+
+  .conversations-view-table th:nth-child(3),
+  .conversations-view-table td:nth-child(3) {
+    width: 200px;
+  }
+
+  .conversations-view-table th:nth-child(4),
+  .conversations-view-table td:nth-child(4) {
+    width: 200px;
+  }
 }

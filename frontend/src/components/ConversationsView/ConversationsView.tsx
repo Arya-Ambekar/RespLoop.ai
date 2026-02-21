@@ -11,6 +11,7 @@ import {
   // setResolutionStatusesFilter,
 } from "../../slices/conversation/conversationSlice.ts";
 import { MessageSquareOff } from "lucide-react";
+import "../../styles/commonStyles/pagination.css";
 
 const ConversationsView = () => {
   const [selectedResolutionStatus, setSelectedResolutionStatus] = useState(

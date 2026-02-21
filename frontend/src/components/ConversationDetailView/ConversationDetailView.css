@@ -125,3 +125,201 @@
   justify-content: center;
   color: #858585;
 }
+
+/* Responsiveness */
+/* Tablet — 768×1024 */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .conversation-detail-view {
+    margin: 18px;
+    gap: 18px;
+  }
+
+  .back-button-wrapper {
+    padding: 8px 26px;
+    font-size: 15px;
+    border-radius: 22px;
+  }
+
+  .back-button {
+    width: 18px;
+    height: 18px;
+  }
+
+  .conversation-window-wrapper {
+    height: calc(100vh - 220px);
+    border-radius: 20px;
+  }
+
+  .profile-picture {
+    margin: 12px 25px;
+    padding: 12px 22px;
+    font-size: x-large;
+  }
+
+  .user-mail {
+    font-size: 18px;
+  }
+
+  .time {
+    font-size: 12px;
+  }
+
+  .conversation-window {
+    height: calc(100vh - 310px);
+    gap: 14px;
+  }
+
+  .details-view-message-bubble {
+    font-size: 14px;
+    padding: 9px 20px;
+  }
+
+  .details-view-ai-message-bubble {
+    margin-left: 22px;
+  }
+
+  .details-view-user-message-bubble {
+    margin-right: 22px;
+  }
+}
+
+/* Laptop — 1024×768 to 1439px */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .conversation-detail-view {
+    margin: 20px;
+    gap: 16px;
+    height: 636px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .back-button-wrapper {
+    padding: 6px 20px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .back-button {
+    width: 15px;
+    height: 15px;
+  }
+
+  .conversation-window-wrapper {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .user-info-header {
+    flex-shrink: 0;
+  }
+
+  .profile-picture {
+    margin: 8px 22px;
+    padding: 9px 18px;
+    font-size: large;
+  }
+
+  .user-mail {
+    font-size: 16px;
+  }
+
+  .time {
+    font-size: 10px;
+  }
+
+  .conversation-window {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    gap: 13px;
+  }
+
+  .details-view-message-bubble {
+    font-size: 14px;
+    padding: 7px 18px;
+  }
+
+  .details-view-ai-message-bubble {
+    margin-left: 18px;
+    border-radius: 14px 14px 14px 0px;
+  }
+
+  .details-view-user-message-bubble {
+    margin-right: 18px;
+    border-radius: 14px 14px 0px 14px;
+  }
+}
+
+/* Desktop — 1440px and above */
+@media screen and (min-width: 1440px) {
+  .conversation-detail-view {
+    margin: 20px;
+    gap: 20px;
+    height: 620px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .back-button-wrapper {
+    padding: 6px 23px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .conversation-window-wrapper {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .user-info-header {
+    flex-shrink: 0;
+  }
+
+  .profile-picture {
+    margin: 10px 30px;
+    padding: 10px 20px;
+    font-size: x-large;
+  }
+
+  .user-mail {
+    font-size: large;
+  }
+
+  .time {
+    font-size: 11px;
+  }
+
+  .conversation-window {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    gap: 15px;
+  }
+
+  .details-view-message-bubble {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+
+  .details-view-ai-message-bubble {
+    margin-left: 20px;
+  }
+
+  .details-view-user-message-bubble {
+    margin-right: 20px;
+  }
+}

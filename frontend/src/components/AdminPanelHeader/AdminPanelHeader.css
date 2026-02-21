@@ -32,3 +32,53 @@
 .admin-panel-header-info p {
   font-size: 18px;
 }
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .admin-panel-header-wrapper {
+    margin: 13px 0px;
+  }
+
+  .admin-panel-header-info p {
+    font-size: 22px;
+  }
+
+  .admin-panel-header-icon-wrapper {
+    gap: 15px;
+  }
+
+  .admin-panel-header-icon-img {
+    height: 60px;
+    width: 60px;
+  }
+}
+
+/* Laptop */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .admin-panel-header-wrapper {
+    margin-top: 0px;
+  }
+
+  .admin-panel-header-icon-img {
+    height: 38px;
+    width: 38px;
+  }
+
+  .admin-panel-header-info p {
+    font-size: 17px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .admin-panel-header-icon-img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .admin-panel-header-info p {
+    font-size: 18px;
+  }
+}

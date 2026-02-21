@@ -53,3 +53,75 @@
   width: 16px;
   height: 16px;
 }
+
+/* Responsiveness */
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .search-bar {
+    margin-left: 60px;
+    width: 400px;
+    height: 50px;
+    border-radius: 30px;
+  }
+  .search-bar-input {
+    font-size: 14px;
+  }
+
+  .search-bar-input::placeholder {
+    font-size: 16px;
+  }
+
+  .search-icon-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .search-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .clear-search-icon {
+    color: #6a6a6a;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Laptop */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .search-bar {
+    margin-left: 60px;
+    width: 300px;
+    height: 38px;
+  }
+
+  .search-bar-input {
+    width: 220px;
+    font-size: 13px;
+  }
+
+  .search-bar-input::placeholder {
+    font-size: 13px;
+  }
+
+  .search-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .search-bar {
+    margin-left: 100px;
+    width: 350px;
+    height: 40px;
+  }
+
+  .search-bar-input {
+    width: 270px;
+    font-size: 14px;
+  }
+}
