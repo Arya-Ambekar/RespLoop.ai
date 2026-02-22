@@ -41,7 +41,7 @@ const TicketsView = () => {
           dropdownList={TICKET_STATUS_FILTER_OPTIONS}
           selectedValue={selectedTicketStatus}
           onSelect={(value: any) => {
-            console.log("filter clicked");
+            // console.log("filter clicked");
             setSelectedTicketStatus(value);
             // dispatch(setStatusesFilter(value));
             dispatch(fetchTickets({ status: value }));
@@ -52,7 +52,7 @@ const TicketsView = () => {
             dropdownList={RECORD_COUNT}
             selectedValue={selectedRecordCount}
             onSelect={(value: any) => {
-              console.log("filter clicked", value);
+              // console.log("filter clicked", value);
               setSelectedRecordCount(value);
               // dispatch(setResolutionStatusesFilter(value));
               dispatch(fetchTickets({ limit: value }));
@@ -83,27 +83,37 @@ const TicketsView = () => {
               </tr>
             </thead>
             <tbody className="table-body">
-              {tickets.map((ticket) => [
-                <tr
-                  key={ticket.id}
-                  onClick={() => {
-                    console.log("table row clicked", ticket.id);
-                    navigate(`/admin/tickets/${ticket.conversationId}`);
-                  }}
-                >
-                  <td>{ticket.Conversation.serial_id}</td>
-                  <td>{ticket.reason}</td>
-                  <td>
-                    <div
-                      className={`tickets-status 
+              {tickets.map((ticket) => {
+                // console.log("ticket=> ", ticket);
+                return (
+                  <tr
+                    key={ticket.id}
+                    onClick={() => {
+                      // console.log("table row clicked", ticket.id);
+                      navigate(
+                        `/admin/conversations/${ticket.conversationId}`,
+                        {
+                          state: {
+                            user: ticket.Conversation.User?.email_id,
+                          },
+                        },
+                      );
+                    }}
+                  >
+                    <td>{ticket.Conversation.serial_id}</td>
+                    <td>{ticket.reason}</td>
+                    <td>
+                      <div
+                        className={`tickets-status 
                       ${ticket.status === "open" ? "open" : null} 
                       ${ticket.status === "closed" ? "closed" : null}`}
-                    >
-                      {ticket.status}
-                    </div>
-                  </td>
-                </tr>,
-              ])}
+                      >
+                        {ticket.status}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}

@@ -25,26 +25,27 @@ const socketSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(connectToSocket.pending, (state) => {
-      state.connectionStatus = "connecting";
-    });
-    builder.addCase(connectToSocket.fulfilled, (state) => {
-      state.connectionStatus = "connected";
-    });
-    builder.addCase(connectToSocket.rejected, (state) => {
-      state.connectionStatus = "connection failed";
-    });
-    builder.addCase(disconnectFromSocket.pending, (state) => {
-      state.connectionStatus = "disconnecting";
-    });
-    builder.addCase(disconnectFromSocket.fulfilled, (state) => {
-      state.connectionStatus = "disconnected";
-    });
-    builder.addCase(disconnectFromSocket.rejected, (state) => {
-      state.connectionStatus = "disconnection failed";
-    });
+    builder
+      .addCase(connectToSocket.pending, (state) => {
+        state.connectionStatus = "connecting";
+      })
+      .addCase(connectToSocket.fulfilled, (state) => {
+        state.connectionStatus = "connected";
+      })
+      .addCase(connectToSocket.rejected, (state) => {
+        state.connectionStatus = "connection failed";
+      })
+      .addCase(disconnectFromSocket.pending, (state) => {
+        state.connectionStatus = "disconnecting";
+      })
+      .addCase(disconnectFromSocket.fulfilled, (state) => {
+        state.connectionStatus = "disconnected";
+      })
+      .addCase(disconnectFromSocket.rejected, (state) => {
+        state.connectionStatus = "disconnection failed";
+      });
   },
 });
 
-export const socketSelector = (state: RootState) => state;
+export const socketSelector = (state: RootState) => state.socket;
 export default socketSlice.reducer;

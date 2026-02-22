@@ -143,7 +143,7 @@ export const createMessageService = async (data: any) => {
     console.log("msgDateTime: ", msgDateTime);
 
     let response = {
-      userMessage,
+      // userMessage,
       botMessage,
       msgDateTime: msgDateTime,
     };

@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import { Conversation } from "../models/conversation.model.ts";
 import { Ticket } from "../models/ticket.model.ts";
+import { User } from "../models/user.model.ts";
 
 export const getTicketsRepository = async (data: any) => {
   try {
@@ -46,6 +47,17 @@ export const getTicketsRepository = async (data: any) => {
             }),
           },
           attributes: ["serial_id"],
+          include: [
+            {
+              model: User,
+              where: {
+                ...(searchTerm && {
+                  email_id: { [Op.iLike]: `%${searchTerm}%` },
+                }),
+              },
+              attributes: ["email_id"],
+            },
+          ],
         },
       ],
       order: [["createdAt", "DESC"]],

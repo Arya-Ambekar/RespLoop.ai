@@ -4,8 +4,9 @@ import { SendHorizonal } from "lucide-react";
 import "./ChatSpace.css";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { addMessage } from "../../slices/message/messageSlice";
+import { addMessage, messageSelector } from "../../slices/message/messageSlice";
 import {
+  addUserMessage,
   conversationSelector,
   fetchConversation,
   startChatListener,
@@ -25,6 +26,7 @@ const ChatSpace = () => {
   const dispatch = useAppDispatch();
   const { currentConversationId } = useAppSelector(userSelector);
   const { currentConversation } = useAppSelector(conversationSelector);
+  const { messageStatus } = useAppSelector(messageSelector);
 
   // const handleEmoji = (e: any) => {
   //   setInputText((prev) => prev + e.emoji);
@@ -68,6 +70,7 @@ const ChatSpace = () => {
         conversationId: currentConversationId,
       }),
     );
+    dispatch(addUserMessage({ text: inputText, sender: "user" }));
     setInputText("");
   };
 
@@ -91,7 +94,16 @@ const ChatSpace = () => {
                 }}
                 placeholder="example@mail.com"
               />
-              <button onClick={addUserHandler}>Login</button>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addUserHandler();
+                }}
+              >
+                <button className="login-user-form-button" type="submit">
+                  Login
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -120,25 +132,38 @@ const ChatSpace = () => {
                     </div>
                   </div>
                 ))}
+
               <div ref={messagesEndRef} />
             </div>
-            <div className="message-input-container">
-              <input
-                className="message-input"
-                type="text"
-                value={inputText}
-                onChange={(e) => {
-                  setInputText(e.target.value);
-                }}
-                placeholder="Type your message..."
-              />
-
-              <div className="message-input-actions">
-                <button className="send-button" onClick={addMessageHandler}>
-                  <SendHorizonal className="send-button-icon" />
-                </button>
+            {messageStatus === "Sending" && (
+              <div className="bot-typing">
+                <p>typing...</p>
               </div>
-            </div>
+            )}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                addMessageHandler();
+              }}
+            >
+              <div className="message-input-container">
+                <input
+                  className="message-input"
+                  type="text"
+                  value={inputText}
+                  onChange={(e) => {
+                    setInputText(e.target.value);
+                  }}
+                  placeholder="Type your message..."
+                />
+
+                <div className="message-input-actions">
+                  <button className="send-button" type="submit">
+                    <SendHorizonal className="send-button-icon" />
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </>
       )}

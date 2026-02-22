@@ -1,3 +1,4 @@
+import { User } from "../models/user.model.ts";
 import {
   getTicketsRepository,
   getTicketRepository,
@@ -9,6 +10,17 @@ import {
 export const getTicketsService = async (data: any) => {
   try {
     let tickets = await getTicketsRepository(data);
+
+    // const formattedTickets = tickets.rows.map((ticket: any) => {
+    //   const ticketObj = ticket.toJSON();
+    //   const user = ticketObj.Conversation.User;
+    //   delete ticketObj.Conversation.User;
+
+    //   return {
+    //     ...ticketObj,
+    //     User: user,
+    //   };
+    // });
 
     return {
       data: tickets.rows,

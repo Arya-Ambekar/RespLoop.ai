@@ -28,13 +28,13 @@ const ConversationsView = () => {
   const { status, pagination, conversations } =
     useAppSelector(conversationSelector);
   // const conversations = useAppSelector(filteredConversations);
-  console.log("selectedResolutionStatus:", selectedResolutionStatus);
-  console.log("pagination:", pagination);
+  // console.log("selectedResolutionStatus:", selectedResolutionStatus);
+  // console.log("pagination:", pagination);
   useEffect(() => {
     dispatch(fetchConversations({ page }));
   }, [dispatch, page]);
 
-  console.log("conversations in ConversationsView: ", conversations);
+  // console.log("conversations in ConversationsView: ", conversations);
   return (
     <div className="conversations-view-wrapper">
       <div className="conversations-view-header">
@@ -42,7 +42,7 @@ const ConversationsView = () => {
           dropdownList={RESOLUTION_STATUS_FILTER_OPTIONS}
           selectedValue={selectedResolutionStatus}
           onSelect={(value: any) => {
-            console.log("filter clicked", value);
+            // console.log("filter clicked", value);
             setSelectedResolutionStatus(value);
             // dispatch(setResolutionStatusesFilter(value));
             dispatch(fetchConversations({ resolution_status: value }));
@@ -53,7 +53,7 @@ const ConversationsView = () => {
             dropdownList={RECORD_COUNT}
             selectedValue={selectedRecordCount}
             onSelect={(value: any) => {
-              console.log("filter clicked", value);
+              // console.log("filter clicked", value);
               setSelectedRecordCount(value);
               // dispatch(setResolutionStatusesFilter(value));
               dispatch(fetchConversations({ limit: value }));
@@ -89,36 +89,39 @@ const ConversationsView = () => {
                 </tr>
               </thead>
               <tbody className="table-body">
-                {conversations?.map((convo) => (
-                  <tr
-                    key={convo.id}
-                    onClick={() => {
-                      console.log("table row clicked", convo.id);
-                      navigate(`/admin/conversations/${convo.id}`, {
-                        state: {
-                          user: convo.User.email_id,
-                          last_msg_time: convo.formatted_last_messaged_at,
-                        },
-                      });
-                    }}
-                  >
-                    <td>{convo.serial_id}</td>
-                    <td>{convo?.User.email_id}</td>
-                    <td>
-                      <div
-                        className={`resolution-status 
+                {conversations?.map((convo) => {
+                  // console.log(convo);
+                  return (
+                    <tr
+                      key={convo.id}
+                      onClick={() => {
+                        // console.log("table row clicked", convo.id);
+                        navigate(`/admin/conversations/${convo.id}`, {
+                          state: {
+                            user: convo.User.email_id,
+                            last_msg_time: convo.formatted_last_messaged_at,
+                          },
+                        });
+                      }}
+                    >
+                      <td>{convo.serial_id}</td>
+                      <td>{convo?.User.email_id}</td>
+                      <td>
+                        <div
+                          className={`resolution-status 
                       ${convo.resolution_status === "resolved" ? "resolved" : null} 
                       ${convo.resolution_status === "partially resolved" ? "partially-resolved" : null} 
                       ${convo.resolution_status === "unresolved" ? "unresolved" : null}`}
-                      >
-                        {convo.resolution_status
-                          ? convo.resolution_status
-                          : "-"}
-                      </div>
-                    </td>
-                    <td>{convo.formatted_last_messaged_at}</td>
-                  </tr>
-                ))}
+                        >
+                          {convo.resolution_status
+                            ? convo.resolution_status
+                            : "-"}
+                        </div>
+                      </td>
+                      <td>{convo.formatted_last_messaged_at}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}

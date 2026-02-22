@@ -22,8 +22,6 @@ export const getConversationsService = async (data: any) => {
       };
     });
 
-    console.log("formattedRows: ", formattedRows);
-
     return {
       data: formattedRows,
       pagination: {

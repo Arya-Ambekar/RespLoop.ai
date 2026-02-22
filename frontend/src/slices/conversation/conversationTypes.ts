@@ -14,14 +14,14 @@ export interface Conversation {
 
 // Types format for output of fetch by id conversations
 export interface currentConversation {
-  id: string;
-  serial_id: string;
-  last_messaged_at: string;
-  resolution_status: string;
-  createdAt: Date;
-  userId: string;
+  id?: string;
+  serial_id?: string;
+  last_messaged_at?: string;
+  resolution_status?: string;
+  createdAt?: Date;
+  userId?: string;
   Messages: {
-    id: string;
+    id?: string;
     text: string;
     sender: string;
   }[];

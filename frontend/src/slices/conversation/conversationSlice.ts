@@ -76,11 +76,13 @@ export const conversationSlice = createSlice({
         action.payload === "All Statuses" ? undefined : action.payload;
     },
     saveReceivedMessages: (state, action) => {
-      state.currentConversation?.Messages.push(action.payload.userMessage);
       state.currentConversation?.Messages.push(action.payload.botMessage);
       if (state.currentConversation) {
         state.currentConversation.last_messaged_at = action.payload.msgDateTime;
       }
+    },
+    addUserMessage: (state, action) => {
+      state.currentConversation?.Messages.push(action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -130,8 +132,11 @@ export const conversationSlice = createSlice({
 
 export const conversationSelector = (state: RootState) => state.conversations;
 export default conversationSlice.reducer;
-export const { setResolutionStatusesFilter, saveReceivedMessages } =
-  conversationSlice.actions;
+export const {
+  setResolutionStatusesFilter,
+  saveReceivedMessages,
+  addUserMessage,
+} = conversationSlice.actions;
 
 export const filteredConversations = createSelector(
   [

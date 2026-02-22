@@ -8,30 +8,42 @@ const ChatBotPage = () => {
   const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
 
   return (
-    <div className="chatbot-wrapper">
+    <>
       {isChatbotButtonVisible && (
-        <button
-          className="chatbot-button"
-          onClick={() => {
-            setIsChatbotButtonVisible(false);
-            setIsChatBoxOpen(true);
-          }}
-        >
-          <img className="chatbot-icon" src={botImg} alt="Chatbot" />
-        </button>
+        <>
+          <div className="instruction">
+            <p>click on below chatbot button</p>
+          </div>
+          <div className="instruction-highlight">
+            <div></div>
+          </div>
+        </>
       )}
-      {isChatBoxOpen && (
-        <div className="chatbot-slot">
-          <ChatBox
-            isOpen
-            onClose={() => {
-              setIsChatBoxOpen(false);
-              setIsChatbotButtonVisible(true);
+      <div className="chatbot-wrapper">
+        {isChatbotButtonVisible && (
+          <button
+            className="chatbot-button"
+            onClick={() => {
+              setIsChatbotButtonVisible(false);
+              setIsChatBoxOpen(true);
             }}
-          />
-        </div>
-      )}
-    </div>
+          >
+            <img className="chatbot-icon" src={botImg} alt="Chatbot" />
+          </button>
+        )}
+        {isChatBoxOpen && (
+          <div className="chatbot-slot">
+            <ChatBox
+              isOpen
+              onClose={() => {
+                setIsChatBoxOpen(false);
+                setIsChatbotButtonVisible(true);
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -6,6 +6,9 @@ export interface Ticket {
   conversationId: string;
   Conversation: {
     serial_id?: string;
+    User?: {
+      email_id?: string;
+    };
   };
 }
 

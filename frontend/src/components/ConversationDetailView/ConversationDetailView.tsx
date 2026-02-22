@@ -14,8 +14,8 @@ const ConversationDetailView = () => {
   const location = useLocation();
 
   const { state } = location;
-  console.log("state in ConversationDetailView: ", state);
-
+  // console.log("state in ConversationDetailView: ", state);
+  console.log("id: ", id);
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector(messageSelector);
 
@@ -24,6 +24,7 @@ const ConversationDetailView = () => {
     dispatch(fetchMessages(id));
   }, [dispatch, id]);
 
+  // console.log("state: ", state);
   return (
     <div className="conversation-detail-view">
       <button className="back-button-wrapper" onClick={() => navigate(-1)}>
@@ -35,7 +36,7 @@ const ConversationDetailView = () => {
           <div className="profile-picture">A</div>
           <div className="user-info">
             <div className="user-mail">{state.user}</div>
-            <div className="time">{state.last_msg_time}</div>
+            {/* <div className="time">{state.last_msg_time}</div> */}
           </div>
         </div>
         <div className="conversation-window">
