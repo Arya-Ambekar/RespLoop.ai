@@ -1,5 +1,7 @@
 export interface FilterDropdownProps {
-  dropdownList: string[];
-  selectedValue: string;
-  onSelect: (value: string) => void;
+  dropdownList: string[] | number[];
+  selectedValue: string | number;
+  onSelect: (value: string | number) => void;
+  maxWidth?: string;
+  maxHeight?: string;
 }

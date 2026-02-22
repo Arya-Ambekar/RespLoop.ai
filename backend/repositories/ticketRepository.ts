@@ -48,6 +48,7 @@ export const getTicketsRepository = async (data: any) => {
           attributes: ["serial_id"],
         },
       ],
+      order: [["createdAt", "DESC"]],
       limit,
       offset,
     });

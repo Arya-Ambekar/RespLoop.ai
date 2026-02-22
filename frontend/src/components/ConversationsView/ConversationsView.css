@@ -7,6 +7,17 @@
   width: 100%;
 }
 
+/* HEADER */
+.conversations-view-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.conversations-record-count-filter {
+  margin-right: 40px;
+}
+
 /* TABLE */
 
 .conversations-content-table-wrapper {
@@ -15,9 +26,18 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
+}
+
+.conversations-view-table thead th {
+  top: 0;
+  z-index: 2;
+  position: sticky;
+  background-color: #dddddd;
 }
 
 .conversations-content-table-wrapper table {
+  /* height: 100px; */
   width: 100%;
   background-color: white;
 }
@@ -29,10 +49,6 @@
 
 .conversations-view-table tr {
   padding: 0px 10px;
-}
-
-.table-header {
-  background-color: #dddddd;
 }
 
 .conversations-view-table thead th,

@@ -7,6 +7,8 @@ const FilterDropdown = ({
   dropdownList,
   selectedValue,
   onSelect,
+  maxHeight,
+  maxWidth,
 }: FilterDropdownProps) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   console.log("dropdownList: ", dropdownList);
@@ -37,6 +39,7 @@ const FilterDropdown = ({
     <div
       className="filter-dropdown-wrapper"
       onClick={() => setIsDropdownVisible((prev) => !prev)}
+      style={{ maxHeight: maxHeight, maxWidth: maxWidth }}
     >
       <div className="filter-header">
         <div className="filter-dropdown-title">{selectedValue || "Select"}</div>

@@ -1,6 +1,7 @@
 .filter-dropdown-wrapper {
   width: 200px;
   position: relative;
+  z-index: 3;
 }
 
 .filter-header {

@@ -55,7 +55,7 @@ export const getConversationsRepository = async (data: any) => {
           attributes: ["email_id"],
         },
       ],
-      order: [["serial_id", "ASC"]],
+      order: [["createdAt", "DESC"]],
       limit,
       offset,
     });

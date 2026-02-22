@@ -12,10 +12,14 @@ import {
 } from "../../slices/conversation/conversationSlice.ts";
 import { MessageSquareOff } from "lucide-react";
 import "../../styles/commonStyles/pagination.css";
+import { RECORD_COUNT } from "../../constants/constants.ts";
 
 const ConversationsView = () => {
   const [selectedResolutionStatus, setSelectedResolutionStatus] = useState(
     RESOLUTION_STATUS_FILTER_OPTIONS[0],
+  );
+  const [selectedRecordCount, setSelectedRecordCount] = useState(
+    RECORD_COUNT[0],
   );
   const [page, setPage] = useState(1);
 
@@ -33,16 +37,31 @@ const ConversationsView = () => {
   console.log("conversations in ConversationsView: ", conversations);
   return (
     <div className="conversations-view-wrapper">
-      <FilterDropdown
-        dropdownList={RESOLUTION_STATUS_FILTER_OPTIONS}
-        selectedValue={selectedResolutionStatus}
-        onSelect={(value: any) => {
-          console.log("filter clicked", value);
-          setSelectedResolutionStatus(value);
-          // dispatch(setResolutionStatusesFilter(value));
-          dispatch(fetchConversations({ resolution_status: value }));
-        }}
-      />
+      <div className="conversations-view-header">
+        <FilterDropdown
+          dropdownList={RESOLUTION_STATUS_FILTER_OPTIONS}
+          selectedValue={selectedResolutionStatus}
+          onSelect={(value: any) => {
+            console.log("filter clicked", value);
+            setSelectedResolutionStatus(value);
+            // dispatch(setResolutionStatusesFilter(value));
+            dispatch(fetchConversations({ resolution_status: value }));
+          }}
+        />
+        <div className="conversations-record-count-filter">
+          <FilterDropdown
+            dropdownList={RECORD_COUNT}
+            selectedValue={selectedRecordCount}
+            onSelect={(value: any) => {
+              console.log("filter clicked", value);
+              setSelectedRecordCount(value);
+              // dispatch(setResolutionStatusesFilter(value));
+              dispatch(fetchConversations({ limit: value }));
+            }}
+            maxWidth="100px"
+          />
+        </div>
+      </div>
       <div className="conversations-content-table-wrapper">
         {status === "loading" && (
           <div className="loading-conversations">Loading...</div>

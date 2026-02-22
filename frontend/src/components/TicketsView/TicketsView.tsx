@@ -13,10 +13,14 @@ import {
 } from "../../slices/ticket/ticketSlice.ts";
 import { MessageSquareOff } from "lucide-react";
 import { useSelector } from "react-redux";
+import { RECORD_COUNT } from "../../constants/constants.ts";
 
 const TicketsView = () => {
   const [selectedTicketStatus, setSelectedTicketStatus] = useState(
     TICKET_STATUS_FILTER_OPTIONS[0],
+  );
+  const [selectedRecordCount, setSelectedRecordCount] = useState(
+    RECORD_COUNT[0],
   );
   const [page, setPage] = useState(1);
 
@@ -32,16 +36,31 @@ const TicketsView = () => {
 
   return (
     <div className="tickets-view-wrapper">
-      <FilterDropdown
-        dropdownList={TICKET_STATUS_FILTER_OPTIONS}
-        selectedValue={selectedTicketStatus}
-        onSelect={(value: string) => {
-          console.log("filter clicked");
-          setSelectedTicketStatus(value);
-          // dispatch(setStatusesFilter(value));
-          dispatch(fetchTickets({ status: value }));
-        }}
-      />
+      <div className="tickets-view-header">
+        <FilterDropdown
+          dropdownList={TICKET_STATUS_FILTER_OPTIONS}
+          selectedValue={selectedTicketStatus}
+          onSelect={(value: any) => {
+            console.log("filter clicked");
+            setSelectedTicketStatus(value);
+            // dispatch(setStatusesFilter(value));
+            dispatch(fetchTickets({ status: value }));
+          }}
+        />
+        <div className="tickets-record-count-filter">
+          <FilterDropdown
+            dropdownList={RECORD_COUNT}
+            selectedValue={selectedRecordCount}
+            onSelect={(value: any) => {
+              console.log("filter clicked", value);
+              setSelectedRecordCount(value);
+              // dispatch(setResolutionStatusesFilter(value));
+              dispatch(fetchTickets({ limit: value }));
+            }}
+            maxWidth="100px"
+          />
+        </div>
+      </div>
       <div className="tickets-content-table-wrapper">
         {status === "loading" && (
           <div className="loading-tickets">Loading...</div>
