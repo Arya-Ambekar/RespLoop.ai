@@ -38,18 +38,15 @@ export const fetchConversation = createAsyncThunk(
   },
 );
 
-// export const fetchMessages = createAsyncThunk(
-//   "fetchMessages",
-//   async function (_, { getState, dispatch }) {
-//     console.log("state ", getState());
-//     return await socketClient.on("chat", (receivedMessages: any) =>
-//       dispatch({
-//         type: "conversations/saveReceivedMessages",
-//         payload: { messages: receivedMessages },
-//       }),
-//     );
-//   },
-// );
+export const createConversation = createAsyncThunk(
+  "conversations/createConversation",
+  async (userId: string) => {
+    const response = await axios.post(`${BASE_URL}/api/v1/conversations`, {
+      userId,
+    });
+    return response.data.data;
+  },
+);
 
 const initialState: ConversationState = {
   conversations: [],
@@ -98,35 +95,13 @@ export const conversationSlice = createSlice({
       .addCase(fetchConversation.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.currentConversation = action.payload;
+      })
+      .addCase(createConversation.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createConversation.fulfilled, (state) => {
+        state.status = "succeeded";
       });
-    // .addCase(fetchMessages.pending, (state) => {
-    //   state.status = "loading";
-    // });
-    // .addCase(fetchMessages.fulfilled, (state, action) => {});
-    // .addCase(addMessage.fulfilled, (state, action) => {
-    //   console.log("addMessage case in conversation slice");
-    //   console.log(
-    //     "currentConversation before uppdating: ",
-    //     state.currentConversation,
-    //   );
-    //   state.currentConversation?.Messages.push(
-    //     action.payload.data?.userMessage,
-    //   );
-    //   console.log(
-    //     "currentConversation after adding userMessage: ",
-    //     state.currentConversation,
-    //   );
-
-    //   if (action.payload.data.botMessage) {
-    //     state.currentConversation?.Messages.push(
-    //       action.payload.data?.botMessage,
-    //     );
-    //   }
-    //   console.log(
-    //     "currentConversation after adding botMessage: ",
-    //     state.currentConversation,
-    //   );
-    // });
   },
 });
 

@@ -23,7 +23,21 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    hydrateUserFromLocalStorage: (state, action) => {
+      state.currentUser = action.payload.user;
+      state.currentConversationId = action.payload.conversationId;
+    },
+
+    setCurrentConversationId: (state, action) => {
+      state.currentConversationId = action.payload;
+    },
+
+    clearUser: (state) => {
+      state.currentUser = null;
+      state.currentConversationId = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addUser.pending, (state) => {
@@ -31,12 +45,19 @@ export const userSlice = createSlice({
       })
       .addCase(addUser.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.currentConversationId = action.payload.conversation.id;
-        console.log("currentConversationId: ", state.currentConversationId);
+        state.currentUser = {
+          id: action.payload.user.id,
+          email_id: action.payload.user.email_id,
+        };
       });
   },
 });
 
+export const {
+  hydrateUserFromLocalStorage,
+  setCurrentConversationId,
+  clearUser,
+} = userSlice.actions;
 export const userSelector = (state: RootState) => state.user;
 export default userSlice.reducer;

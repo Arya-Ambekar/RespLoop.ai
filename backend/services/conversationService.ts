@@ -5,6 +5,7 @@ import {
   updateConversationRepository,
   deleteConversationRepository,
 } from "../repositories/conversationRepository.ts";
+import { generateConversationSerialNumber } from "../utilities/conversationSerialNumberGenerator.ts";
 import { formatDateTime } from "../utilities/reusableFunctions/DateFormatter.ts";
 
 export const getConversationsService = async (data: any) => {
@@ -49,6 +50,8 @@ export const getConversationService = async (data: any) => {
 
 export const createConversationService = async (data: any) => {
   try {
+    const serialId = await generateConversationSerialNumber();
+    data.body.serial_id = serialId;
     let conversation = await createConversationRepository(data);
     return conversation;
   } catch (error) {
