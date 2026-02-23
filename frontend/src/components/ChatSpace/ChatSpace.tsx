@@ -24,6 +24,13 @@ const ChatSpace = () => {
 
   const [inputText, setInputText] = useState("");
   const [email, setEmail] = useState("");
+
+  // Mutable flag that persists across renders.
+  // We use useRef instead of useState because:
+  // - We only need to remember this value
+  // - We do NOT want changes to trigger a re-render
+  // This prevents the chat options from appearing again
+  // after the user has already made a choice.
   const hasChosenRef = useRef(false);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -44,6 +51,10 @@ const ChatSpace = () => {
         }),
       );
       dispatch(fetchConversation({ id: storedConvoId }));
+
+      // Only show the Continue / New Chat options
+      // if the user has NOT already chosen in this session.
+      // If they already picked once, we skip showing it again.
       if (!hasChosenRef.current) {
         setShowOptions(true);
       }
@@ -108,12 +119,20 @@ const ChatSpace = () => {
       dispatch(fetchConversation({ id: result.payload.id }));
 
       setShowOptions(false);
+
+      // Mark that the user has made a choice.
+      // This ensures the options won't show again
+      // even if the component re-renders.
       hasChosenRef.current = true;
     }
   };
 
   const handleContinueOldChat = () => {
     setShowOptions(false);
+
+    // Mark that the user has made a choice.
+    // This ensures the options won't show again
+    // even if the component re-renders.
     hasChosenRef.current = true;
   };
 
