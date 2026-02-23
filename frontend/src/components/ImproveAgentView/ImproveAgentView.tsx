@@ -30,7 +30,7 @@ const ImproveAgentView = () => {
       <FilterDropdown
         dropdownList={IMPROVE_AGENT_RESOLUTION_STATUS_FILTER_OPTIONS}
         selectedValue={selectedImproveAgentResolutionStatus}
-        onSelect={(value: string) => {
+        onSelect={(value: any) => {
           setSelectedImproveAgentResolutionStatus(value);
           dispatch(setImproveAgentStatusesFilter(value));
         }}
