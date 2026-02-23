@@ -10,7 +10,7 @@ const Menu = () => {
   const dispatch = useAppDispatch();
   const { activeView } = useAppSelector(menuSelector);
 
-  console.log(activeView);
+  // console.log(activeView);
 
   return (
     <div className="menu-wrapper">

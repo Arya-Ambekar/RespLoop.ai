@@ -47,12 +47,12 @@ export const improverAgentSlice = createSlice({
       }
     },
     searchImproveAgentData: (state, action) => {
-      console.log("searchImproveAgentData called", action.payload);
+      // console.log("searchImproveAgentData called", action.payload);
       state.searchQueries.conversation_serial_id = action.payload;
-      console.log(
-        "state.searchQueries.conversation_serial_id: ",
-        state.searchQueries.conversation_serial_id,
-      );
+      // console.log(
+      //   "state.searchQueries.conversation_serial_id: ",
+      //   state.searchQueries.conversation_serial_id,
+      // );
     },
   },
 });

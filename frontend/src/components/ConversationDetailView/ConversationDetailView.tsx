@@ -15,7 +15,6 @@ const ConversationDetailView = () => {
 
   const { state } = location;
   // console.log("state in ConversationDetailView: ", state);
-  console.log("id: ", id);
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector(messageSelector);
 

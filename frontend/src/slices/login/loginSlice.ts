@@ -28,7 +28,7 @@ export const loginSlice = createSlice({
         state.status = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log("action.payload", action.payload);
+        // console.log("action.payload", action.payload);
         state.isLoggedIn = action.payload;
       })
       .addCase(login.rejected, (state) => {

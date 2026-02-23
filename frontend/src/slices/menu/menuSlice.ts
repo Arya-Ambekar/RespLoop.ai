@@ -3,7 +3,7 @@ import { views } from "./menuTypes";
 import type { RootState } from "../../store/store";
 
 const savedActiveView = localStorage.getItem("activeView");
-console.log("savedActiveView: ", savedActiveView);
+// console.log("savedActiveView: ", savedActiveView);
 
 const initialState = {
   activeView: savedActiveView ?? views.CONVERSATIONS,

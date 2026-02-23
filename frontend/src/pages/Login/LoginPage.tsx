@@ -14,7 +14,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useAppSelector(loginSelector);
-  console.log("isLoggedIn: ", isLoggedIn);
+  // console.log("isLoggedIn: ", isLoggedIn);
 
   useEffect(() => {
     if (isLoggedIn) {

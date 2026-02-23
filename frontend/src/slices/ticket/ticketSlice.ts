@@ -60,7 +60,7 @@ export const ticketSlice = createSlice({
       .addCase(fetchTickets.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.tickets = action.payload?.data;
-        console.log("payload: ", action.payload);
+        // console.log("payload: ", action.payload);
         state.pagination = action.payload?.pagination;
       });
   },

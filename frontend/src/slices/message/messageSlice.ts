@@ -44,7 +44,7 @@ export const messageSlice = createSlice({
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.messages = action.payload?.data;
-        console.log(action.payload);
+        // console.log(action.payload);
       });
     builder.addCase(addMessage.pending, (state) => {
       state.messageStatus = "Sending";

@@ -11,7 +11,7 @@ const FilterDropdown = ({
   maxWidth,
 }: FilterDropdownProps) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  console.log("dropdownList: ", dropdownList);
+  // console.log("dropdownList: ", dropdownList);
 
   const dropdownContent = (
     <div className="filter-dropdown-options-container">

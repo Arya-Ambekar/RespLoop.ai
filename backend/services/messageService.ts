@@ -35,7 +35,7 @@ export const getMessageService = async (data: any) => {
     const { id } = data.params;
 
     let message = await getMessageRepository({ id });
-    console.log(message);
+    // console.log(message);
     return message;
   } catch (error) {
     throw error;
@@ -138,9 +138,9 @@ export const createMessageService = async (data: any) => {
 
     botMessage = await createMessageRepository(data);
 
-    console.log("userMessage: ", userMessage.createdAt);
+    // console.log("userMessage: ", userMessage.createdAt);
     const msgDateTime = await formatDateTimeAsync(userMessage.createdAt);
-    console.log("msgDateTime: ", msgDateTime);
+    // console.log("msgDateTime: ", msgDateTime);
 
     let response = {
       // userMessage,

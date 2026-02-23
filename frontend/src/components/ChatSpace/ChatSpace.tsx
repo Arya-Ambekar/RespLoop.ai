@@ -74,7 +74,7 @@ const ChatSpace = () => {
   }, [dispatch]);
 
   const addUserHandler = async () => {
-    console.log("clicked on add user button");
+    // console.log("clicked on add user button");
     if (!email) return;
 
     const result = await dispatch(addUser(email));
@@ -95,7 +95,7 @@ const ChatSpace = () => {
   };
 
   const addMessageHandler = () => {
-    console.log("clicked on send button");
+    // console.log("clicked on send button");
     if (!inputText || !currentConversationId) return;
     dispatch(
       addMessage({
@@ -170,7 +170,7 @@ const ChatSpace = () => {
     );
   }
 
-  console.log("currentConversation: ", currentConversation);
+  // console.log("currentConversation: ", currentConversation);
   return (
     <div className="ChatSpace-header">
       <div className="message-container">

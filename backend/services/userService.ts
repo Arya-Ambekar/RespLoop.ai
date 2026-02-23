@@ -38,7 +38,7 @@ export const getUserService = async (data: any) => {
 export const createUserService = async (data: any) => {
   try {
     const serialId = await generateConversationSerialNumber();
-    console.log(serialId);
+    // console.log(serialId);
     // console.log("data in createUserService: ", data);
     data.body.email_id = data.body?.email;
     let user = await createUserRepository(data);

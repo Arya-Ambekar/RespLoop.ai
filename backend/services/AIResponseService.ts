@@ -5,11 +5,11 @@ import type { ChatCompletionTool } from "openai/resources/chat";
 import { createTicketService } from "../services/ticketService.ts";
 import { updateResolutionStatus } from "../repositories/conversationRepository.ts";
 
-const token = process.env.LLM_TOKEN!;
-const endpoint = process.env.LLM_ENDPOINT!;
-const model = process.env.LLM_MODEL!;
+export const token = process.env.LLM_TOKEN!;
+export const endpoint = process.env.LLM_ENDPOINT!;
+export const model = process.env.LLM_MODEL!;
 
-const companyKnowledge = `RespLoopAI is an AI-powered customer support platform that helps businesses automate conversations with their customers in real time.
+export const companyKnowledge = `RespLoopAI is an AI-powered customer support platform that helps businesses automate conversations with their customers in real time.
 
 The system provides:
 
@@ -34,7 +34,7 @@ RespLoopAI does not replace human support teams. Instead, it acts as the first l
 
 The goal of RespLoopAI is to create faster, smarter, and more structured customer support experiences.`;
 
-const systemPrompt = `You are a strictly limited domain AI assistant.
+export const systemPrompt = `You are a strictly limited domain AI assistant.
 
 You are ONLY allowed to answer questions related to:
 ${companyKnowledge}
@@ -97,7 +97,7 @@ Your only possible actions are:
 
 If unsure, call create_ticket.`;
 
-const createTicketToolDefinition: ChatCompletionTool = {
+export const createTicketToolDefinition: ChatCompletionTool = {
   type: "function",
   function: {
     name: "create_ticket",
@@ -124,8 +124,8 @@ export const generateBotResponse = async (
   userMessage: string,
   conversationId: string,
 ) => {
-  console.log("message in generateBotResponse:", userMessage);
-  console.log("message in generateBotResponse:", conversationId);
+  // console.log("message in generateBotResponse:", userMessage);
+  // console.log("message in generateBotResponse:", conversationId);
   const client = new OpenAI({ baseURL: endpoint, apiKey: token });
 
   const response = await client.chat.completions.create({
@@ -140,11 +140,11 @@ export const generateBotResponse = async (
 
   const message = response.choices[0].message;
 
-  console.log("message: ", message);
+  // console.log("message: ", message);
 
   if (message.tool_calls && message.tool_calls.length > 0) {
     const toolCall = message.tool_calls[0];
-    console.log("toolCall: ", toolCall);
+    // console.log("toolCall: ", toolCall);
     if (toolCall.type === "function") {
       const args = JSON.parse(toolCall.function.arguments);
 
