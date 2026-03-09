@@ -2,6 +2,7 @@ import { useState } from "react";
 import botImg from "../../assets/ezgif-15214f110b5f7f84.webp";
 import "./ChatBotPage.css";
 import ChatBox from "../../components/ChatBox/ChatBox.tsx";
+import { Link } from "react-router-dom";
 
 const ChatBotPage = () => {
   const [isChatbotButtonVisible, setIsChatbotButtonVisible] = useState(true);
@@ -12,7 +13,7 @@ const ChatBotPage = () => {
       {isChatbotButtonVisible && (
         <>
           <div className="instruction">
-            <p>click on below chatbot button</p>
+            <p>Click on below chatbot button</p>
           </div>
           <div className="instruction-highlight">
             <div></div>
@@ -20,28 +21,33 @@ const ChatBotPage = () => {
         </>
       )}
       <div className="chatbot-wrapper">
-        {isChatbotButtonVisible && (
-          <button
-            className="chatbot-button"
-            onClick={() => {
-              setIsChatbotButtonVisible(false);
-              setIsChatBoxOpen(true);
-            }}
-          >
-            <img className="chatbot-icon" src={botImg} alt="Chatbot" />
-          </button>
-        )}
-        {isChatBoxOpen && (
-          <div className="chatbot-slot">
-            <ChatBox
-              isOpen
-              onClose={() => {
-                setIsChatBoxOpen(false);
-                setIsChatbotButtonVisible(true);
+        <Link to={"/login"}>
+          <button className="admin-login-button">Login</button>
+        </Link>
+        <div className="chatbot-area">
+          {isChatBoxOpen && (
+            <div className="chatbot-slot">
+              <ChatBox
+                isOpen
+                onClose={() => {
+                  setIsChatBoxOpen(false);
+                  setIsChatbotButtonVisible(true);
+                }}
+              />
+            </div>
+          )}
+          {isChatbotButtonVisible && (
+            <button
+              className="chatbot-button"
+              onClick={() => {
+                setIsChatbotButtonVisible(false);
+                setIsChatBoxOpen(true);
               }}
-            />
-          </div>
-        )}
+            >
+              <img className="chatbot-icon" src={botImg} alt="Chatbot" />
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

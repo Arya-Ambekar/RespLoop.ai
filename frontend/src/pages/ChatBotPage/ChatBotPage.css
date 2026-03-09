@@ -31,11 +31,30 @@
 
 .chatbot-wrapper {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: flex-end;
   height: 100vh;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  /* background-color: aquamarine; */
+}
+
+.admin-login-button {
+  margin-top: 30px;
+  border-radius: 20px;
+  border: none;
+  background-color: #2e9cfb;
+  color: white;
+  padding: 7px 20px;
+  font-size: 16px;
+  position: relative;
+  z-index: 4;
+}
+
+.chatbot-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
 }
 
 .chatbot-button {
