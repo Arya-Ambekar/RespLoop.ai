@@ -111,6 +111,21 @@
   width: 15px;
 }
 
+.new-chat-button {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-left: 18px;
+}
+
+.new-chat-button button {
+  background-color: #2e9cfb;
+  color: white;
+  border-radius: 15px;
+  border: none;
+  padding: 3px 10px;
+}
+
 /* EMAIL INPUT */
 .email-input-wrapper {
   width: 100%;
@@ -234,6 +249,17 @@
     width: 16px;
   }
 
+  .new-chat-button {
+    gap: 8px;
+    margin-left: 15px;
+  }
+
+  .new-chat-button button {
+    font-size: 13px;
+    border-radius: 12px;
+    padding: 2px 10px;
+  }
+
   .email-input-container {
     max-width: 300px;
   }
@@ -278,6 +304,17 @@
     width: 16px;
   }
 
+  .new-chat-button {
+    gap: 9px;
+    margin-left: 17px;
+  }
+
+  .new-chat-button button {
+    font-size: 13px;
+    border-radius: 15px;
+    padding: 3px 10px;
+  }
+
   .email-input-container {
     max-width: 300px;
   }
@@ -316,6 +353,17 @@
   .send-button-icon {
     height: 17px;
     width: 17px;
+  }
+
+  .new-chat-button {
+    gap: 9px;
+    margin-left: 19px;
+  }
+
+  .new-chat-button button {
+    font-size: 13px;
+    border-radius: 15px;
+    padding: 3px 10px;
   }
 
   .email-input-container {
