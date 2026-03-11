@@ -90,14 +90,11 @@ const TicketsView = () => {
                     key={ticket.id}
                     onClick={() => {
                       // console.log("table row clicked", ticket.id);
-                      navigate(
-                        `/admin/conversations/${ticket.conversationId}`,
-                        {
-                          state: {
-                            user: ticket.Conversation.User?.email_id,
-                          },
+                      navigate(`/admin/tickets/${ticket.conversationId}`, {
+                        state: {
+                          user: ticket.Conversation.User?.email_id,
                         },
-                      );
+                      });
                     }}
                   >
                     <td>{ticket.Conversation.serial_id}</td>

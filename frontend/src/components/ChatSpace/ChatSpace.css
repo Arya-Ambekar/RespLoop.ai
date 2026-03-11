@@ -126,6 +126,10 @@
   padding: 3px 10px;
 }
 
+.new-chat-button button:hover {
+  cursor: pointer;
+}
+
 /* EMAIL INPUT */
 .email-input-wrapper {
   width: 100%;

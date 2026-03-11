@@ -15,9 +15,6 @@ const ChatBotPage = () => {
           <div className="instruction">
             <p>Click on below chatbot button</p>
           </div>
-          <div className="instruction-highlight">
-            <div></div>
-          </div>
         </>
       )}
       <div className="chatbot-wrapper">

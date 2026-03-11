@@ -25,7 +25,7 @@ export const socketClient = new SocketClient();
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<ChatBotPage />}></Route>,
+      <Route path="/" element={<ChatBotPage />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
       <Route path="admin" element={<AdminPanelPage />}>
         <Route path="conversations" element={<ConversationsView />} />
@@ -44,6 +44,6 @@ createRoot(document.getElementById("root")!).render(
     <App>
       <RouterProvider router={router} />
     </App>
-    {/* </StrictMode> */},
+    {/* </StrictMode> */}
   </Provider>,
 );
