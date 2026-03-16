@@ -18,7 +18,7 @@ const ConversationDetailView = () => {
   // console.log("state in ConversationDetailView: ", state);
   const dispatch = useAppDispatch();
   const { messages } = useAppSelector(messageSelector);
-
+  const userInitials = state.user[0].toUpperCase();
   useEffect(() => {
     if (!id) return;
     dispatch(fetchMessages(id));
@@ -33,7 +33,7 @@ const ConversationDetailView = () => {
       </button>
       <div className="conversation-window-wrapper">
         <div className="user-info-header">
-          <div className="profile-picture">A</div>
+          <div className="profile-picture">{userInitials}</div>
           <div className="user-info">
             <div className="user-mail">{state.user}</div>
             {/* <div className="time">{state.last_msg_time}</div> */}
