@@ -7,6 +7,7 @@ import {
   messageSelector,
 } from "../../slices/message/messageSlice";
 import { useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 
 const ConversationDetailView = () => {
   const { id } = useParams();
@@ -46,7 +47,9 @@ const ConversationDetailView = () => {
                 className={`details-view-message-bubble
                 ${message.sender === "ai" ? "details-view-ai-message-bubble" : "details-view-user-message-bubble"}`}
               >
-                <p>{message.text}</p>
+                <p>
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
+                </p>
               </div>
             );
           })}

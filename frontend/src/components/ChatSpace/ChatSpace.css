@@ -32,7 +32,7 @@
 .ai-message-bubble {
   font-size: 12px;
   align-self: flex-start;
-  padding: 7px 12px;
+  padding: 10px 12px;
   background-color: #f3f3f3;
   border-radius: 13px 13px 13px 0px;
   max-width: 78%;
@@ -42,7 +42,7 @@
 }
 
 .ai-message-bubble div {
-  margin: 0;
+  margin-left: 9px;
 }
 
 .user-message-bubble {

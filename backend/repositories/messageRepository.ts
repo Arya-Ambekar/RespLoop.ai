@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { Message } from "../models/message.model.ts";
+import { Conversation } from "../models/conversation.model.ts";
 
 export const getMessagesRepository = async (data: any) => {
   try {
@@ -45,7 +46,24 @@ export const getMessageRepository = async ({ id }: { id: string }) => {
 
 export const createMessageRepository = async (data: any) => {
   try {
+    console.log("data in createMessageRepository: ", data.body);
     const message = await Message.create(data.body);
+
+    const conversationId = message.conversationId;
+
+    if (conversationId) {
+      setImmediate(async () => {
+        try {
+          await Conversation.update(
+            { last_messaged_at: message.sent_at },
+            { where: { id: conversationId } },
+          );
+        } catch (err) {
+          console.error("Conversation update failed:", err);
+        }
+      });
+    }
+
     return message;
   } catch (error) {
     throw error;

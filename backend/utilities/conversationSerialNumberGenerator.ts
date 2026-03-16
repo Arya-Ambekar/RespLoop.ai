@@ -5,6 +5,7 @@ export const generateConversationSerialNumber = async () => {
   const targetLength = 3;
   const prefix = "CONVO-";
   let serialId = "";
+
   let lastConversation = await Conversation.findOne({
     attributes: ["id", "serial_id"],
     order: [["createdAt", "DESC"]],
@@ -13,15 +14,19 @@ export const generateConversationSerialNumber = async () => {
   let lastConversationJSON = lastConversation?.toJSON();
 
   if (!lastConversationJSON) {
-    serialId = prefix + serialIdRear;
+    const paddedNum = String(serialIdRear).padStart(targetLength, "0");
+    serialId = prefix + paddedNum;
   } else {
     let serialNumArray = lastConversationJSON.serial_id?.split("-");
     let tempSerialId = serialNumArray?.length
       ? Number(serialNumArray[1])
       : serialIdRear;
+
     tempSerialId++;
+
     const paddedNum = String(tempSerialId).padStart(targetLength, "0");
     serialId = prefix + paddedNum;
   }
+
   return serialId;
 };

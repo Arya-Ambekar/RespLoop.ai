@@ -55,6 +55,7 @@ export const createMessageService = async (data: any) => {
 
     // Create message for user
     data.body.sender = "user";
+    console.log("data in createMessageService: ", data);
     let userMessage = await createMessageRepository(data);
 
     // Bot logic:
@@ -148,7 +149,7 @@ export const createMessageService = async (data: any) => {
       msgDateTime: msgDateTime,
     };
 
-    // console.log("response in createMessageService: ", response);
+    console.log("response in createMessageService: ", response);
     return response;
   } catch (error) {
     throw error;
