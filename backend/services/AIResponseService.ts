@@ -149,6 +149,41 @@ RespLoop.ai support operates 24/7.
 Customers can ask questions at any time and receive AI assistance.
 If the user asks to speak with a human support agent, you must create a support ticket so the human team can follow up.
 
+CRITICAL RULE — UNDERSTAND BEFORE ESCALATING
+
+Never treat a general offer, request for help, greeting,
+or introductory question as an unresolved support issue.
+
+Examples:
+- "Can you help me?"
+- "Would you help me?"
+- "I need help"
+- "Hello"
+- "Can I ask you something?"
+- "Are you there?"
+
+These are conversation starters, NOT escalation requests.
+
+For these messages:
+1. Respond naturally.
+2. Ask the user what they need assistance with.
+3. NEVER call create_ticket.
+
+A support ticket requires an identifiable request or
+issue that the assistant cannot resolve, unless the
+user explicitly requests a human agent.
+
+Before calling create_ticket:
+- Identify the actual problem.
+- Check whether you can answer or solve it.
+- Ask for missing information when clarification
+  could help.
+- Attempt a reasonable solution when possible.
+- Escalate only when you cannot resolve the request.
+
+A user asking for help is NOT the same as a user
+asking for human support.
+
 --------------------------------------------------
 RULE 1 — IN-SCOPE QUESTIONS
 --------------------------------------------------
@@ -191,45 +226,60 @@ If you are unsure about a fact related to RespLoop.ai:
 • If the issue still cannot be resolved, create a support ticket
 
 --------------------------------------------------
-RULE 4 — TICKET ESCALATION
+RULE 4 — INTELLIGENT PROBLEM SOLVING AND ESCALATION
 --------------------------------------------------
 
-Create a support ticket immediately in the following situations:
+Your primary goal is to help the user resolve their request.
 
-1. The user explicitly asks for human support.
+Do not immediately create a ticket just because a question
+is outside RespLoop.ai's scope or is unfamiliar.
 
-Examples:
-• "I want to talk to a human"
-• "Connect me to support"
-• "I need a real agent"
+For every request:
 
-2. The question is outside the scope of RespLoop.ai services.
+1. UNDERSTAND
+- Understand what the user is asking.
+- Consider the conversation history.
+- Distinguish greetings, questions, complaints, and requests.
+- If the request is ambiguous, ask one useful clarification question.
 
-3. The issue requires technical investigation that cannot be solved through explanation.
+2. ATTEMPT TO HELP
+- Determine whether you can provide a reliable, useful answer.
+- This includes reasonable out-of-scope questions.
+- Use your general knowledge when appropriate.
+- Do not invent facts, claim capabilities you do not have,
+  or promise actions you cannot perform.
+- If you can resolve the request, answer directly.
 
-4. The user reports a problem and the issue remains unresolved after ONE clarification attempt.
+3. EVALUATE RESOLUTION
+- If your response adequately addresses the request,
+  do not create a ticket.
+- If important information is missing, ask one clarification
+  question before deciding.
+- If you cannot reliably answer, troubleshoot, or resolve
+  the request, create a ticket.
 
-Escalation Flow:
+4. CREATE TICKET
+Call create_ticket when:
+- The user explicitly requests human support.
+- The request cannot be resolved with your available
+  knowledge or capabilities.
+- The request is out of scope AND you cannot provide
+  meaningful assistance.
+- A troubleshooting attempt fails and the issue remains unresolved.
+- The user confirms that your previous solution did not work.
 
-Step 1:
-If a user reports a problem, acknowledge it and ask ONE clarification question.
+Do not create tickets for greetings, casual conversation,
+questions you can answer, or requests that only need clarification.
 
-Step 2:
-If the user replies but the issue is still unresolved, OR expresses frustration,
-you MUST create a support ticket.
+Never create a ticket solely because a message uses unfamiliar
+wording or is outside the company's normal topic.
 
-Do NOT ask multiple clarification questions repeatedly.
+Do not repeatedly ask questions when you already know that
+you cannot resolve the issue.
 
-Examples of frustration signals:
-
-• "This is frustrating"
-• "This still doesn't work"
-• "Your platform is broken"
-• "I already tried that"
-• "Nothing is working"
-
-If these appear after your first attempt to help,
-you MUST escalate by creating a ticket.
+IMPORTANT:
+Being out of scope does not automatically mean a ticket is required.
+Being unable to help reliably does.
 
 --------------------------------------------------
 IMPORTANT
@@ -284,14 +334,27 @@ Your only possible actions are:
 (A) Answer questions about RespLoop.ai
 (B) Call create_ticket
 
-If you are unsure what to do, call create_ticket.
+DECISION PRIORITY
+
+First, understand the user's intent.
+
+Second, determine whether you can help reliably.
+
+Third, ask one clarification question if the missing
+information could enable a useful answer.
+
+Finally, call create_ticket if you cannot resolve the
+request or the user explicitly requests human support.
+
+Prefer resolving requests over creating unnecessary tickets,
+but never pretend an unresolved request has been solved.
 `;
 export const createTicketToolDefinition: ChatCompletionTool = {
   type: "function",
   function: {
     name: "create_ticket",
     description:
-      "Creates a support ticket when user asks an out-of-scope question or requests human assistance.",
+      "Create a human support ticket when the user explicitly requests human assistance, or when the assistant cannot reliably resolve the request after an appropriate clarification or troubleshooting attempt. Applies to unresolved in-scope and out-of-scope requests. Do not call for questions the assistant can answer.",
     parameters: {
       type: "object",
       properties: {
@@ -314,7 +377,7 @@ export const generateBotResponse = async (
   conversationId: string,
 ) => {
   // console.log("message in generateBotResponse:", userMessage);
-  // console.log("message in generateBotResponse:", conversationId);
+  // console.log("conversationId in generateBotResponse:", conversationId);
   const client = new OpenAI({ baseURL: endpoint, apiKey: token });
 
   // Fetch the last 30 messages for context
@@ -334,22 +397,50 @@ export const generateBotResponse = async (
   // Add the latest message
   conversationMessages.push({ role: "user", content: userMessage });
 
-  const response = await client.chat.completions.create({
-    model: model,
-    messages: [
-      {
-        role: "system",
-        content: systemPrompt,
-      } as OpenAI.ChatCompletionMessageParam,
-      ...conversationMessages,
-    ],
-    tools: [createTicketToolDefinition],
-    tool_choice: "auto",
-  });
+  let response;
 
+  try {
+    // response = await client.chat.completions.create({
+    // model: model,
+    // messages: [
+    //   {
+    //     role: "system",
+    //     content: systemPrompt,
+    //   } as OpenAI.ChatCompletionMessageParam,
+    //   ...conversationMessages,
+    // ],
+    // tools: [createTicketToolDefinition],
+    // tool_choice: "auto",
+    // });
+    const apiResult = await client.chat.completions
+      .create({
+        model: model,
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt,
+          } as OpenAI.ChatCompletionMessageParam,
+          ...conversationMessages,
+        ],
+        tools: [createTicketToolDefinition],
+        tool_choice: "auto",
+      })
+      .withResponse();
+
+    response = apiResult.data;
+  } catch (error: any) {
+    console.error("AI API FAILED:", {
+      message: error.message,
+      status: error.status,
+      code: error.code,
+      type: error.type,
+    });
+
+    throw error;
+  }
   const message = response.choices[0].message;
 
-  // console.log("message: ", message);
+  // console.log("bot message: ", message);
 
   if (message.tool_calls && message.tool_calls.length > 0) {
     const toolCall = message.tool_calls[0];

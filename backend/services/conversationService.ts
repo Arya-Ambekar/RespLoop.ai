@@ -15,12 +15,12 @@ export const getConversationsService = async (data: any) => {
     const formattedRows = conversations.rows.map((conversation) => {
       const conversationObj = conversation.toJSON();
 
-      console.log("conversations get all api: ", {
-        ...conversationObj,
-        formatted_last_messaged_at: conversation.last_messaged_at
-          ? formatDateTime(conversation.last_messaged_at)
-          : null,
-      });
+      // console.log("conversations get all api: ", {
+      //   ...conversationObj,
+      //   formatted_last_messaged_at: conversation.last_messaged_at
+      //     ? formatDateTime(conversation.last_messaged_at)
+      //     : null,
+      // });
 
       return {
         ...conversationObj,
